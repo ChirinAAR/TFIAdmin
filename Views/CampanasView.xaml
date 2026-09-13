@@ -1,0 +1,156 @@
+<UserControl x:Class="SiTech.AgroLogistica.Views.CampanasView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1200">
+
+    <Grid Background="{StaticResource BrushCanvas}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Margin="24,18,24,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="🌾 Campañas Agrícolas y Proyectos Productivos" 
+                           FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                <TextBlock Text="Planificación estratégica de ciclos agrícolas (Gruesa, Fina, Zafra, Citrícola), objetivos y presupuestos" 
+                           FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="0,3,0,0" />
+            </StackPanel>
+
+            <Button Grid.Column="1" 
+                    Content="+ Planificar Nueva Campaña" 
+                    Style="{StaticResource BtnPrimary}" 
+                    Command="{Binding AbrirNuevoCommand}" />
+        </Grid>
+
+        <!-- Formulario Nueva Campaña -->
+        <Border Grid.Row="1" 
+                Style="{StaticResource CardPanel}" 
+                Margin="24,0,24,14" 
+                Background="#F0FDF4" 
+                BorderBrush="{StaticResource BrushPrimaryLight}"
+                Visibility="{Binding MostrarDialogoNuevo, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel>
+                <TextBlock Text="Planificar Nuevo Ciclo Agrícola" FontWeight="Bold" FontSize="15" Foreground="{StaticResource BrushPrimaryDark}" Margin="0,0,0,10" />
+                <UniformGrid Columns="3" Margin="0,0,0,8">
+                    <StackPanel Margin="6">
+                        <TextBlock Text="Nombre de la Campaña *" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <TextBox Text="{Binding NuevoNombre, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Margin="6">
+                        <TextBlock Text="Tipo de Ciclo (Gruesa / Fina / Zafra)" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <TextBox Text="{Binding NuevoTipo, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Margin="6">
+                        <TextBlock Text="Responsable General" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <TextBox Text="{Binding NuevoResponsable, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </UniformGrid>
+                <UniformGrid Columns="3" Margin="0,0,0,8">
+                    <StackPanel Margin="6">
+                        <TextBlock Text="Hectáreas Planificadas" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <TextBox Text="{Binding NuevasHectareas, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Margin="6">
+                        <TextBlock Text="Toneladas Objetivo" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <TextBox Text="{Binding NuevasToneladas, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Margin="6">
+                        <TextBlock Text="Presupuesto Estimado (USD)" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <TextBox Text="{Binding NuevoPresupuesto, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </UniformGrid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,6,0">
+                    <Button Content="Cancelar" Style="{StaticResource BtnSecondary}" Margin="0,0,10,0" Command="{Binding CancelarNuevoCommand}" />
+                    <Button Content="Guardar Campaña" Style="{StaticResource BtnPrimary}" Command="{Binding GuardarNuevoCommand}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Contenido: Lista y Detalle -->
+        <Grid Grid.Row="2" Margin="24,0,24,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2.1*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="1.2*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- DataGrid -->
+            <Border Grid.Column="0" Style="{StaticResource CardPanel}">
+                <DataGrid ItemsSource="{Binding Campanas}" SelectedItem="{Binding CampanaSeleccionada}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Código" Binding="{Binding Codigo}" Width="140" FontWeight="SemiBold" />
+                        <DataGridTextColumn Header="Nombre de Campaña" Binding="{Binding Nombre}" Width="*" />
+                        <DataGridTextColumn Header="Ciclo" Binding="{Binding TipoCiclo}" Width="100" />
+                        <DataGridTextColumn Header="Hectáreas" Binding="{Binding ResumenHectareas}" Width="90" />
+                        <DataGridTemplateColumn Header="Avance" Width="110">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="4,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="34" />
+                                        </Grid.ColumnDefinitions>
+                                        <ProgressBar Grid.Column="0" Value="{Binding AvancePorcentaje}" VerticalAlignment="Center" Height="6" />
+                                        <TextBlock Grid.Column="1" Text="{Binding ResumenAvance}" FontSize="11" FontWeight="SemiBold" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="90" FontWeight="SemiBold" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+            <!-- Ficha Técnica -->
+            <Border Grid.Column="2" Style="{StaticResource CardPanel}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel DataContext="{Binding CampanaSeleccionada}">
+                        <TextBlock Text="Detalles del Proyecto Agrícola" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" Margin="0,0,0,12" />
+
+                        <Border Background="{StaticResource BrushPrimarySubtle}" CornerRadius="8" Padding="12" Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Nombre}" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushPrimaryDark}" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Codigo}" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource BrushPrimaryMedium}" Margin="0,2,0,0" />
+                                <TextBlock Text="{Binding TipoCiclo, StringFormat='Ciclo: {0}'}" FontSize="11" Foreground="{StaticResource BrushTextMuted}" Margin="0,2,0,0" />
+                            </StackPanel>
+                        </Border>
+
+                        <TextBlock Text="METAS &amp; PLANIFICACIÓN" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushTextLight}" Margin="0,4,0,8" />
+
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Superficie Planificada:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding ResumenHectareas}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Producción Objetivo:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding ToneladasObjetivo, StringFormat='{}{0:N0} Toneladas'}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Presupuesto Estimado:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding PresupuestoEstimadoUsd, StringFormat='{}USD {0:N0}'}" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushPrimary}" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Líder Responsable:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding ResponsableGeneral}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Inicio de Labores:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding FechaInicio, StringFormat='{}{0:dd/MM/yyyy}'}" FontSize="12" HorizontalAlignment="Right" />
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

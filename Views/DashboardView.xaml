@@ -1,0 +1,270 @@
+<UserControl x:Class="SiTech.AgroLogistica.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="850" d:DesignWidth="1200">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24,20,24,24">
+
+            <!-- Encabezado del Dashboard -->
+            <Grid Margin="0,0,0,18">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Panel de Control Ejecutivo AgroLogística" 
+                               FontSize="22" 
+                               FontWeight="Bold" 
+                               Foreground="{StaticResource BrushTextMain}" />
+                    <TextBlock Text="Monitoreo integral de operaciones productivas, cosechas, logística y acopio en el NOA" 
+                               FontSize="13" 
+                               Foreground="{StaticResource BrushTextMuted}" 
+                               Margin="0,4,0,0" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Border Background="#ECFDF5" BorderBrush="#A7F3D0" BorderThickness="1" CornerRadius="20" Padding="12,6">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="8" Height="8" Fill="#10B981" Margin="0,0,8,0" />
+                            <TextBlock Text="Sistema en Línea | Telemetría Activa" FontWeight="SemiBold" FontSize="12" Foreground="#047857" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+
+            <!-- Fila de Tarjetas de Indicadores (KPIs) -->
+            <ItemsControl ItemsSource="{Binding Kpis}" Margin="0,0,0,10">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="5" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource CardPanel}" Margin="6" Padding="14">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Titulo}" 
+                                           FontSize="11" 
+                                           FontWeight="Bold" 
+                                           Foreground="{StaticResource BrushTextLight}" />
+                                <TextBlock Text="{Binding Valor}" 
+                                           FontSize="22" 
+                                           FontWeight="Bold" 
+                                           Foreground="{StaticResource BrushTextMain}" 
+                                           Margin="0,6,0,4" />
+                                <TextBlock Text="{Binding Subtitulo}" 
+                                           FontSize="11" 
+                                           Foreground="{StaticResource BrushTextMuted}" 
+                                           TextTrimming="CharacterEllipsis" />
+                                <Border Height="1" Background="{StaticResource BrushBorderLight}" Margin="0,8,0,6" />
+                                <TextBlock Text="{Binding Tendencia}" 
+                                           FontSize="11" 
+                                           FontWeight="SemiBold" 
+                                           Foreground="{StaticResource BrushPrimaryMedium}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Fila Principal: Logística en Tiempo Real y Alertas Críticas -->
+            <Grid Margin="0,10,0,14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.7*" />
+                    <ColumnDefinition Width="14" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Columna Izquierda: Camiones y Logística en Tránsito -->
+                <Border Grid.Column="0" Style="{StaticResource CardPanel}">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="🚛 Flota de Transporte y Envíos en Curso" 
+                                           FontSize="16" 
+                                           FontWeight="Bold" 
+                                           Foreground="{StaticResource BrushTextMain}" />
+                                <TextBlock Text="Seguimiento de cartas de porte y avance en ruta a acopios" 
+                                           FontSize="12" 
+                                           Foreground="{StaticResource BrushTextMuted}" />
+                            </StackPanel>
+                            <Button Grid.Column="1" 
+                                    Content="Ver Todo el Transporte" 
+                                    Style="{StaticResource BtnSecondary}" 
+                                    Command="{Binding NavegarCommand}" 
+                                    CommandParameter="Transporte" 
+                                    FontSize="11" />
+                        </Grid>
+
+                        <!-- Lista de Envíos -->
+                        <ItemsControl ItemsSource="{Binding ViajesEnCurso}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#F8FAFC" 
+                                            BorderBrush="{StaticResource BrushBorderLight}" 
+                                            BorderThickness="1" 
+                                            CornerRadius="8" 
+                                            Padding="12" 
+                                            Margin="0,0,0,10">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <!-- Header del viaje -->
+                                            <Grid Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding CartaPorteNumero}" FontWeight="Bold" FontSize="13" Foreground="{StaticResource BrushPrimaryMedium}" />
+                                                    <TextBlock Text=" • " Foreground="{StaticResource BrushTextLight}" />
+                                                    <TextBlock Text="{Binding ResumenCarga}" FontWeight="SemiBold" FontSize="12" />
+                                                </StackPanel>
+
+                                                <!-- Badge de Estado -->
+                                                <Border Grid.Column="1" 
+                                                        Background="{StaticResource BrushPrimarySubtle}" 
+                                                        CornerRadius="12" 
+                                                        Padding="8,2">
+                                                    <TextBlock Text="{Binding Estado}" 
+                                                               FontSize="11" 
+                                                               FontWeight="SemiBold" 
+                                                               Foreground="{StaticResource BrushPrimaryMedium}" />
+                                                </Border>
+                                            </Grid>
+
+                                            <!-- Chofer y Ruta -->
+                                            <StackPanel Grid.Row="1" Margin="0,6,0,6">
+                                                <TextBlock Text="{Binding OrigenCampo, StringFormat='📍 Origen: {0}'}" 
+                                                           FontSize="11" 
+                                                           Foreground="{StaticResource BrushTextMuted}" 
+                                                           Margin="0,0,0,2" />
+                                                <TextBlock Text="{Binding DestinoAcopio, StringFormat='🏁 Destino: {0}'}" 
+                                                           FontSize="11" 
+                                                           Foreground="{StaticResource BrushTextMuted}" />
+                                            </StackPanel>
+
+                                            <!-- Progreso -->
+                                            <Grid Grid.Row="2" Margin="0,4,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <ProgressBar Grid.Column="0" Value="{Binding ProgresoRuta}" VerticalAlignment="Center" Height="6" />
+                                                <TextBlock Grid.Column="1" Text="{Binding ProgresoRuta, StringFormat='{}{0:F0}%'}" FontSize="11" FontWeight="SemiBold" Margin="8,0,0,0" />
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <!-- Columna Derecha: Alertas Agroclimáticas y Acciones Rápidas -->
+                <StackPanel Grid.Column="2">
+                    <!-- Alertas -->
+                    <Border Style="{StaticResource CardPanel}">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" 
+                                           Text="⚠️ Alertas Vigentes" 
+                                           FontSize="15" 
+                                           FontWeight="Bold" 
+                                           Foreground="{StaticResource BrushTextMain}" />
+                                <Button Grid.Column="1" 
+                                        Content="Centro Clima" 
+                                        Style="{StaticResource BtnSecondary}" 
+                                        Command="{Binding NavegarCommand}" 
+                                        CommandParameter="Clima" 
+                                        FontSize="11" />
+                            </Grid>
+
+                            <ItemsControl ItemsSource="{Binding AlertasUrgentes}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="{StaticResource BrushDanger}" 
+                                                BorderThickness="1,0,0,0" 
+                                                Background="#FEF2F2" 
+                                                CornerRadius="0,6,6,0" 
+                                                Padding="10" 
+                                                Margin="0,0,0,10">
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Titulo}" FontWeight="Bold" FontSize="12" Foreground="{StaticResource BrushDanger}" TextWrapping="Wrap" />
+                                                <TextBlock Text="{Binding ZonaAfectada, StringFormat='Zona: {0}'}" FontSize="11" FontWeight="SemiBold" Margin="0,2,0,0" />
+                                                <TextBlock Text="{Binding RecomendacionOperativa}" FontSize="11" Foreground="{StaticResource BrushTextMuted}" Margin="0,4,0,0" TextWrapping="Wrap" />
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Accesos Rápidos de Demostración -->
+                    <Border Style="{StaticResource CardPanel}">
+                        <StackPanel>
+                            <TextBlock Text="⚡ Acceso Rápido a Módulos" 
+                                       FontSize="15" 
+                                       FontWeight="Bold" 
+                                       Foreground="{StaticResource BrushTextMain}" 
+                                       Margin="0,0,0,10" />
+
+                            <Button Content="🌱 Monitoreo de Cultivos y Lotes" 
+                                    Style="{StaticResource BtnSecondary}" 
+                                    HorizontalContentAlignment="Left"
+                                    Margin="0,0,0,8" 
+                                    Command="{Binding NavegarCommand}" 
+                                    CommandParameter="Cultivos" />
+
+                            <Button Content="🚜 Registrar Avance de Cosecha" 
+                                    Style="{StaticResource BtnSecondary}" 
+                                    HorizontalContentAlignment="Left"
+                                    Margin="0,0,0,8" 
+                                    Command="{Binding NavegarCommand}" 
+                                    CommandParameter="Cosecha" />
+
+                            <Button Content="🏭 Control de Silos y Stock" 
+                                    Style="{StaticResource BtnSecondary}" 
+                                    HorizontalContentAlignment="Left"
+                                    Margin="0,0,0,8" 
+                                    Command="{Binding NavegarCommand}" 
+                                    CommandParameter="Acopio" />
+
+                            <Button Content="🔍 Rastreo y Trazabilidad Digital" 
+                                    Style="{StaticResource BtnSecondary}" 
+                                    HorizontalContentAlignment="Left"
+                                    Margin="0,0,0,8" 
+                                    Command="{Binding NavegarCommand}" 
+                                    CommandParameter="Trazabilidad" />
+
+                            <Button Content="📊 Generar Reportes Ejecutivos" 
+                                    Style="{StaticResource BtnPrimary}" 
+                                    HorizontalContentAlignment="Left"
+                                    Command="{Binding NavegarCommand}" 
+                                    CommandParameter="Reportes" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "SiTech.AgroLogistica/1.0.0": {
+        "runtime": {
+          "SiTech.AgroLogistica.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SiTech.AgroLogistica/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,223 @@
+<UserControl x:Class="SiTech.AgroLogistica.Views.CultivosView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1200">
+
+    <Grid Background="{StaticResource BrushCanvas}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header del Módulo -->
+        <Grid Grid.Row="0" Margin="24,18,24,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="🌱 Monitoreo de Cultivos y Parcelas Agrícolas" 
+                           FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                <TextBlock Text="Seguimiento agronómico de lotes en el NOA: fenología, humedad de suelo e índice verde NDVI" 
+                           FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="0,3,0,0" />
+            </StackPanel>
+
+            <Button Grid.Column="1" 
+                    Content="+ Registrar Nuevo Lote" 
+                    Style="{StaticResource BtnPrimary}" 
+                    Command="{Binding AbrirNuevoLoteCommand}" />
+        </Grid>
+
+        <!-- Formulario Desplegable de Alta de Lote -->
+        <Border Grid.Row="1" 
+                Style="{StaticResource CardPanel}" 
+                Margin="24,0,24,14" 
+                Background="#F0FDF4" 
+                BorderBrush="{StaticResource BrushPrimaryLight}"
+                Visibility="{Binding MostrarFormularioNuevo, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel>
+                <TextBlock Text="Registrar Nuevo Lote Productivo" FontWeight="Bold" FontSize="15" Foreground="{StaticResource BrushPrimaryDark}" Margin="0,0,0,10" />
+                <UniformGrid Columns="4" Margin="0,0,0,10">
+                    <StackPanel Margin="6">
+                        <TextBlock Text="Nombre del Lote *" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <TextBox Text="{Binding NuevoNombre, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Margin="6">
+                        <TextBlock Text="Establecimiento / Finca" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <TextBox Text="{Binding NuevaFinca, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Margin="6">
+                        <TextBlock Text="Zona / Localidad" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <TextBox Text="{Binding NuevaZona, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Margin="6">
+                        <TextBlock Text="Superficie (Hectáreas)" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <TextBox Text="{Binding NuevasHectareas, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </UniformGrid>
+                <UniformGrid Columns="3" Margin="0,0,0,10">
+                    <StackPanel Margin="6">
+                        <TextBlock Text="Tipo de Cultivo" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <ComboBox ItemsSource="{Binding CultivosDisponibles}" SelectedItem="{Binding NuevoCultivo}" />
+                    </StackPanel>
+                    <StackPanel Margin="6">
+                        <TextBlock Text="Híbrido / Variedad" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <TextBox Text="{Binding NuevaVariedad, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Margin="6">
+                        <TextBlock Text="Estado Fenológico Inicial" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <TextBox Text="{Binding NuevoEstadoFenologico, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </UniformGrid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,6,0">
+                    <Button Content="Cancelar" Style="{StaticResource BtnSecondary}" Margin="0,0,10,0" Command="{Binding CancelarNuevoLoteCommand}" />
+                    <Button Content="Guardar Lote" Style="{StaticResource BtnPrimary}" Command="{Binding GuardarNuevoLoteCommand}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Contenido: Lista y Ficha de Detalle -->
+        <Grid Grid.Row="2" Margin="24,0,24,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="1.2*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Panel de Tabla y Filtros -->
+            <Border Grid.Column="0" Style="{StaticResource CardPanel}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Filtros -->
+                    <Grid Grid.Row="0" Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Filtrar por Cultivo:" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                            <ComboBox ItemsSource="{Binding CultivosDisponibles}" SelectedItem="{Binding FiltroCultivo}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Buscar por Lote, Código o Localidad:" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                            <TextBox Text="{Binding TextoBusqueda, UpdateSourceTrigger=PropertyChanged}" Height="36" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- DataGrid de Lotes -->
+                    <DataGrid Grid.Row="1" 
+                              ItemsSource="{Binding Lotes}" 
+                              SelectedItem="{Binding LoteSeleccionado}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Código" Binding="{Binding CodigoLote}" Width="90" FontWeight="SemiBold" />
+                            <DataGridTextColumn Header="Lote / Finca" Binding="{Binding Nombre}" Width="*" />
+                            <DataGridTextColumn Header="Cultivo" Binding="{Binding TipoCultivo}" Width="100" />
+                            <DataGridTextColumn Header="Zona" Binding="{Binding ZonaUbicacion}" Width="130" />
+                            <DataGridTextColumn Header="Superficie" Binding="{Binding ResumenSuperficie}" Width="80" />
+                            <DataGridTextColumn Header="NDVI" Binding="{Binding ResumenNDVI}" Width="65" />
+                            <DataGridTextColumn Header="Humedad" Binding="{Binding ResumenHumedad}" Width="75" />
+                            <DataGridTextColumn Header="Sanidad" Binding="{Binding EstadoSanitario}" Width="110" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+
+            <!-- Ficha Técnica de Lote Seleccionado -->
+            <Border Grid.Column="2" Style="{StaticResource CardPanel}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel DataContext="{Binding LoteSeleccionado}">
+                        <TextBlock Text="Ficha Agronómica del Lote" 
+                                   FontSize="15" 
+                                   FontWeight="Bold" 
+                                   Foreground="{StaticResource BrushTextMain}" 
+                                   Margin="0,0,0,12" />
+
+                        <Border Background="{StaticResource BrushPrimarySubtle}" CornerRadius="8" Padding="12" Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Nombre}" FontSize="16" FontWeight="Bold" Foreground="{StaticResource BrushPrimaryDark}" />
+                                <TextBlock Text="{Binding CodigoLote}" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource BrushPrimaryMedium}" />
+                                <TextBlock Text="{Binding FincaEstablecimiento}" FontSize="12" Margin="0,2,0,0" />
+                                <TextBlock Text="{Binding ZonaUbicacion}" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                            </StackPanel>
+                        </Border>
+
+                        <TextBlock Text="PARÁMETROS BIOFÍSICOS &amp; SUELO" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushTextLight}" Margin="0,4,0,8" />
+
+                        <!-- Indicador NDVI -->
+                        <Border Background="#F8FAFC" BorderBrush="{StaticResource BrushBorderLight}" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,0,0,8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Índice Verde NDVI (Satelital)" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                                    <TextBlock Text="{Binding ResumenNDVI}" FontSize="18" FontWeight="Bold" Foreground="{StaticResource BrushPrimary}" />
+                                    <TextBlock Text="Vigor vegetativo alto" FontSize="10" Foreground="{StaticResource BrushPrimaryMedium}" />
+                                </StackPanel>
+                                <Border Grid.Column="1" Background="#DCFCE7" CornerRadius="15" Width="30" Height="30" VerticalAlignment="Center">
+                                    <TextBlock Text="🛰️" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" />
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Humedad Suelo -->
+                        <Border Background="#F8FAFC" BorderBrush="{StaticResource BrushBorderLight}" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,0,0,8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Humedad en Perfil de Suelo" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                                    <TextBlock Text="{Binding ResumenHumedad}" FontSize="18" FontWeight="Bold" Foreground="{StaticResource BrushBlue}" />
+                                    <TextBlock Text="Rango óptimo para el cultivo" FontSize="10" Foreground="{StaticResource BrushBlue}" />
+                                </StackPanel>
+                                <Border Grid.Column="1" Background="{StaticResource BrushBlueLight}" CornerRadius="15" Width="30" Height="30" VerticalAlignment="Center">
+                                    <TextBlock Text="💧" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" />
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Datos Agronómicos -->
+                        <TextBlock Text="DATOS AGRONÓMICOS" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushTextLight}" Margin="0,8,0,8" />
+
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Variedad / Híbrido:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding VariedadHibrido}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Estado Fenológico:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding EstadoFenologico}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Rinde Esperado:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding RindeEsperadoTnHa, StringFormat='{}{0:F2} Tn/Ha'}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Estado Fitosanitario:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding EstadoSanitario}" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource BrushPrimary}" HorizontalAlignment="Right" />
+                        </Grid>
+
+                        <TextBlock Text="NOTAS DEL INGENIERO DE CAMPO" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushTextLight}" Margin="0,10,0,6" />
+                        <Border Background="#F8FAFC" BorderBrush="{StaticResource BrushBorderLight}" BorderThickness="1" CornerRadius="6" Padding="10">
+                            <TextBlock Text="{Binding NotasObservaciones}" FontSize="12" Foreground="{StaticResource BrushTextMain}" TextWrapping="Wrap" />
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

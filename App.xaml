@@ -1,0 +1,73 @@
+<Application x:Class="SiTech.AgroLogistica.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:SiTech.AgroLogistica.ViewModels"
+             xmlns:common="clr-namespace:SiTech.AgroLogistica.ViewModels.Common"
+             xmlns:views="clr-namespace:SiTech.AgroLogistica.Views"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Colors.xaml" />
+                <ResourceDictionary Source="Styles/Controls.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <common:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+
+            <!-- Mapeo Automático de ViewModels a Vistas -->
+            <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+                <views:LoginView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+                <views:DashboardView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:CultivosViewModel}">
+                <views:CultivosView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:CosechaViewModel}">
+                <views:CosechaView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:TransporteViewModel}">
+                <views:TransporteView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:AcopioViewModel}">
+                <views:AcopioView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:ClimaAlertasViewModel}">
+                <views:ClimaAlertasView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:TrazabilidadViewModel}">
+                <views:TrazabilidadView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:ClientesViewModel}">
+                <views:ClientesView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:CampanasViewModel}">
+                <views:CampanasView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:EmpleadosViewModel}">
+                <views:EmpleadosView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:ReportesViewModel}">
+                <views:ReportesView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:ConfiguracionViewModel}">
+                <views:ConfiguracionView />
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

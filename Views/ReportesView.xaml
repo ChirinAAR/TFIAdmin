@@ -1,0 +1,119 @@
+<UserControl x:Class="SiTech.AgroLogistica.Views.ReportesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1200">
+
+    <Grid Background="{StaticResource BrushCanvas}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Margin="24,18,24,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="📊 Generación de Reportes y Análisis Operativo" 
+                           FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                <TextBlock Text="Consolidación de métricas de producción, mermas de flete y existencias de granos para toma de decisiones" 
+                           FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="0,3,0,0" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="📥 Exportar Excel (.xlsx)" 
+                        Style="{StaticResource BtnSecondary}" 
+                        Margin="0,0,10,0" 
+                        Command="{Binding ExportarExcelCommand}" />
+                <Button Content="📑 Exportar PDF Oficial" 
+                        Style="{StaticResource BtnPrimary}" 
+                        Command="{Binding ExportarPdfCommand}" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Selector de Tipo de Reporte y Filtros -->
+        <Border Grid.Row="1" Style="{StaticResource CardPanel}" Margin="24,0,24,14" Padding="14">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.5*" />
+                    <ColumnDefinition Width="1.5*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,14,0">
+                    <TextBlock Text="Seleccionar Tipo de Informe:" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                    <ComboBox ItemsSource="{Binding TiposReporte}" SelectedItem="{Binding ReporteSeleccionado}" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0,0,14,0">
+                    <TextBlock Text="Período / Campaña:" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                    <ComboBox ItemsSource="{Binding Periodos}" SelectedItem="{Binding PeriodoSeleccionado}" />
+                </StackPanel>
+
+                <Button Grid.Column="2" 
+                        Content="🔄 Actualizar Datos" 
+                        Style="{StaticResource BtnSecondary}" 
+                        Height="36" 
+                        VerticalAlignment="Bottom" 
+                        Command="{Binding GenerarReporteCommand}" />
+            </Grid>
+        </Border>
+
+        <!-- Contenido: Tabla de Previsualización -->
+        <Border Grid.Row="2" Style="{StaticResource CardPanel}" Margin="24,0,24,20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Mensaje de Exportación -->
+                <Border Grid.Row="0" 
+                        Background="#ECFDF5" 
+                        BorderBrush="#10B981" 
+                        BorderThickness="1" 
+                        CornerRadius="6" 
+                        Padding="10" 
+                        Margin="0,0,0,12"
+                        Visibility="{Binding MensajeExportacion, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Text="{Binding MensajeExportacion}" FontWeight="SemiBold" Foreground="#047857" FontSize="12" />
+                </Border>
+
+                <!-- Encabezado de Vista Previa -->
+                <Grid Grid.Row="1" Margin="0,0,0,10">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Previsualización de Datos: " FontWeight="Bold" FontSize="14" Foreground="{StaticResource BrushTextMain}" />
+                        <TextBlock Text="{Binding ReporteSeleccionado}" FontWeight="Bold" FontSize="14" Foreground="{StaticResource BrushPrimaryMedium}" />
+                        <TextBlock Text=" • Período: " Foreground="{StaticResource BrushTextLight}" />
+                        <TextBlock Text="{Binding PeriodoSeleccionado}" FontSize="13" Foreground="{StaticResource BrushTextMuted}" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- DataGrid Dinámico -->
+                <DataGrid Grid.Row="2" ItemsSource="{Binding Filas}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{Binding DataContext.HeaderCol1, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                            Binding="{Binding Columna1}" Width="2*" FontWeight="SemiBold" />
+                        <DataGridTextColumn Header="{Binding DataContext.HeaderCol2, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                            Binding="{Binding Columna2}" Width="1.5*" />
+                        <DataGridTextColumn Header="{Binding DataContext.HeaderCol3, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                            Binding="{Binding Columna3}" Width="1.2*" />
+                        <DataGridTextColumn Header="{Binding DataContext.HeaderCol4, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                            Binding="{Binding Columna4}" Width="1.2*" FontWeight="SemiBold" />
+                        <DataGridTextColumn Header="{Binding DataContext.HeaderCol5, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                            Binding="{Binding Columna5}" Width="1.2*" />
+                        <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="100" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

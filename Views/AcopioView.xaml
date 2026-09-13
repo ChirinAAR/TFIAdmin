@@ -1,0 +1,214 @@
+<UserControl x:Class="SiTech.AgroLogistica.Views.AcopioView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1200">
+
+    <Grid Background="{StaticResource BrushCanvas}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header del Módulo -->
+        <Grid Grid.Row="0" Margin="24,18,24,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="🏭 Gestión de Acopio, Silos y Stock de Granos" 
+                           FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                <TextBlock Text="Control de capacidad en silos verticales, celdas y silos bolsa, con monitoreo de humedad y temperatura" 
+                           FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="0,3,0,0" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="📥 Registrar Ingreso Balanza (+30 Tn)" 
+                        Style="{StaticResource BtnPrimary}" 
+                        Margin="0,0,10,0" 
+                        Command="{Binding IngresoGranosCommand}" />
+                <Button Content="📤 Registrar Egreso Despacho (-30 Tn)" 
+                        Style="{StaticResource BtnAccent}" 
+                        Command="{Binding EgresoGranosCommand}" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Toast de Notificación de Movimiento -->
+        <Border Grid.Row="1" 
+                Background="#ECFDF5" 
+                BorderBrush="#10B981" 
+                BorderThickness="1" 
+                CornerRadius="6" 
+                Padding="12,8" 
+                Margin="24,0,24,10"
+                Visibility="{Binding MensajeAccion, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Text="{Binding MensajeAccion}" FontWeight="SemiBold" Foreground="#047857" FontSize="12" />
+        </Border>
+
+        <!-- Contenido: Lista de Silos y Panel de Control -->
+        <Grid Grid.Row="2" Margin="24,0,24,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="1.2*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Lista de Silos en Tarjetas -->
+            <Border Grid.Column="0" Style="{StaticResource CardPanel}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Silos}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#F8FAFC" 
+                                        BorderBrush="{StaticResource BrushBorderLight}" 
+                                        BorderThickness="1" 
+                                        CornerRadius="8" 
+                                        Padding="14" 
+                                        Margin="0,0,0,12">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Encabezado de Silo -->
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Text="{Binding Identificador}" FontWeight="Bold" FontSize="14" Foreground="{StaticResource BrushTextMain}" />
+                                                <TextBlock Text="{Binding PlantaAcopio}" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                                            </StackPanel>
+
+                                            <Border Grid.Column="1" 
+                                                    Background="{StaticResource BrushPrimarySubtle}" 
+                                                    CornerRadius="6" 
+                                                    Padding="8,3" 
+                                                    Margin="0,0,10,0" 
+                                                    VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding GranoAlmacenado}" FontWeight="Bold" FontSize="11" Foreground="{StaticResource BrushPrimaryMedium}" />
+                                            </Border>
+
+                                            <Button Grid.Column="2" 
+                                                    Content="Seleccionar" 
+                                                    Style="{StaticResource BtnSecondary}" 
+                                                    FontSize="11" 
+                                                    Padding="10,4"
+                                                    Command="{Binding DataContext.SeleccionarSiloCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}" />
+                                        </Grid>
+
+                                        <!-- Barra de Capacidad -->
+                                        <Grid Grid.Row="1" Margin="0,12,0,8">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0" Margin="0,0,0,4">
+                                                <TextBlock Text="Ocupación de Capacidad:" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                                                <TextBlock Text="{Binding ResumenStock}" FontSize="11" FontWeight="Bold" HorizontalAlignment="Right" />
+                                            </Grid>
+                                            <ProgressBar Grid.Row="1" Value="{Binding PorcentajeOcupacion}" Height="10" />
+                                        </Grid>
+
+                                        <!-- Métricas Ambientales del Grano -->
+                                        <Grid Grid.Row="2" Margin="0,4,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Text="Humedad Grano" FontSize="10" Foreground="{StaticResource BrushTextLight}" />
+                                                <TextBlock Text="{Binding HumedadGranoPorcentaje, StringFormat='{}{0:F1}%'}" FontWeight="Bold" FontSize="12" Foreground="{StaticResource BrushBlue}" />
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="Temperatura Interna" FontSize="10" Foreground="{StaticResource BrushTextLight}" />
+                                                <TextBlock Text="{Binding TemperaturaGranoC, StringFormat='{}{0:F1} °C'}" FontWeight="Bold" FontSize="12" Foreground="{StaticResource BrushAccent}" />
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="2">
+                                                <TextBlock Text="Aireación" FontSize="10" Foreground="{StaticResource BrushTextLight}" />
+                                                <TextBlock Text="{Binding EstadoAireacion}" FontWeight="SemiBold" FontSize="12" Foreground="{StaticResource BrushPrimary}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+
+            <!-- Ficha Técnica del Silo Seleccionado -->
+            <Border Grid.Column="2" Style="{StaticResource CardPanel}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel DataContext="{Binding SiloSeleccionado}">
+                        <TextBlock Text="Monitoreo de Silo Activo" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" Margin="0,0,0,12" />
+
+                        <Border Background="{StaticResource BrushPrimarySubtle}" CornerRadius="8" Padding="12" Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Identificador}" FontSize="16" FontWeight="Bold" Foreground="{StaticResource BrushPrimaryDark}" />
+                                <TextBlock Text="{Binding TipoEstructura}" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                                <TextBlock Text="{Binding PlantaAcopio}" FontSize="11" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Border>
+
+                        <TextBlock Text="BALANCE DE INVENTARIO" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushTextLight}" Margin="0,4,0,8" />
+
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Cereal Almacenado:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding GranoAlmacenado}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Capacidad Máxima:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding CapacidadMaximaTn, StringFormat='{}{0:N0} Tn'}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Stock Disponible:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding StockActualTn, StringFormat='{}{0:N0} Tn'}" FontSize="13" FontWeight="Bold" Foreground="{StaticResource BrushPrimary}" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Capacidad Remanente:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding CapacidadDisponibleTn, StringFormat='{}{0:N0} Tn Libres'}" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource BrushAccent}" HorizontalAlignment="Right" />
+                        </Grid>
+
+                        <TextBlock Text="CALIDAD E INOCUIDAD" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushTextLight}" Margin="0,10,0,8" />
+
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Calidad Comercial:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding CalidadGrano}" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource BrushPrimary}" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Estado Termometría:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding EstadoAireacion}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Última Calibración:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding UltimaInspeccion, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" FontSize="11" HorizontalAlignment="Right" />
+                        </Grid>
+
+                        <Border Background="#F8FAFC" BorderBrush="{StaticResource BrushBorderLight}" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,12,0,0">
+                            <StackPanel>
+                                <TextBlock Text="💡 Recomendación SiTech" FontWeight="Bold" FontSize="11" Foreground="{StaticResource BrushPrimaryMedium}" />
+                                <TextBlock Text="Mantener ciclos de aireación nocturna con humedad relativa exterior menor al 60% para prevenir condensación." FontSize="11" Foreground="{StaticResource BrushTextMuted}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

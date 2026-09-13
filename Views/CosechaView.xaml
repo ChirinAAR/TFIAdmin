@@ -1,0 +1,161 @@
+<UserControl x:Class="SiTech.AgroLogistica.Views.CosechaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1200">
+
+    <Grid Background="{StaticResource BrushCanvas}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header del Módulo -->
+        <Grid Grid.Row="0" Margin="24,18,24,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="🚜 Planificación y Gestión de Cosecha" 
+                           FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                <TextBlock Text="Seguimiento de labores de recolección, rindes reales por hectárea, cuadrillas y maquinaria en campo" 
+                           FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="0,3,0,0" />
+            </StackPanel>
+
+            <Button Grid.Column="1" 
+                    Content="⚡ Registrar Descarga / Avance (+Tn)" 
+                    Style="{StaticResource BtnAccent}" 
+                    Command="{Binding RegistrarAvanceCommand}" />
+        </Grid>
+
+        <!-- Diálogo Interactivo para Registrar Avance de Cosecha -->
+        <Border Grid.Row="1" 
+                Style="{StaticResource CardPanel}" 
+                Margin="24,0,24,14" 
+                Background="{StaticResource BrushAccentLight}" 
+                BorderBrush="{StaticResource BrushAccent}"
+                Visibility="{Binding MostrarDialogoAvance, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel>
+                <TextBlock Text="Registrar Descarga de Tolva / Avance de Cosecha" FontWeight="Bold" FontSize="15" Foreground="#92400E" Margin="0,0,0,10" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,16,0">
+                        <TextBlock Text="{Binding LaborSeleccionada.LoteNombre, StringFormat='Lote seleccionado: {0}'}" FontWeight="Bold" FontSize="13" />
+                        <TextBlock Text="{Binding LaborSeleccionada.CodigoLabor, StringFormat='Código de Labor: {0}'}" FontSize="12" Foreground="#92400E" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="0,0,16,0">
+                        <TextBlock Text="Toneladas Descargadas (Tn):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                        <TextBox Text="{Binding ToneladasAvance, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
+                        <Button Content="Cancelar" Style="{StaticResource BtnSecondary}" Margin="0,0,10,0" Command="{Binding CancelarAvanceCommand}" />
+                        <Button Content="Confirmar Registro" Style="{StaticResource BtnPrimary}" Command="{Binding ConfirmarAvanceCommand}" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Contenido: Grilla de Labores y Detalle de Recursos -->
+        <Grid Grid.Row="2" Margin="24,0,24,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2.2*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="1.2*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Lista de Labores -->
+            <Border Grid.Column="0" Style="{StaticResource CardPanel}">
+                <DataGrid ItemsSource="{Binding Labores}" SelectedItem="{Binding LaborSeleccionada}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Labor" Binding="{Binding CodigoLabor}" Width="100" FontWeight="SemiBold" />
+                        <DataGridTextColumn Header="Lote / Establecimiento" Binding="{Binding LoteNombre}" Width="*" />
+                        <DataGridTextColumn Header="Cultivo" Binding="{Binding TipoCultivo}" Width="90" />
+                        <DataGridTextColumn Header="Área" Binding="{Binding HectareasLabor, StringFormat='{}{0:N0} Ha'}" Width="75" />
+                        <DataGridTextColumn Header="Cosechado / Meta" Binding="{Binding ResumenTon}" Width="125" />
+                        <DataGridTextColumn Header="Rinde Real" Binding="{Binding ResumenRinde}" Width="95" FontWeight="SemiBold" />
+                        <DataGridTemplateColumn Header="Avance" Width="120">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="4,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="36" />
+                                        </Grid.ColumnDefinitions>
+                                        <ProgressBar Grid.Column="0" Value="{Binding PorcentajeAvance}" VerticalAlignment="Center" Height="6" />
+                                        <TextBlock Grid.Column="1" Text="{Binding PorcentajeAvance, StringFormat='{}{0:F0}%'}" FontSize="11" FontWeight="SemiBold" Margin="6,0,0,0" VerticalAlignment="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="95" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+            <!-- Ficha Técnica de la Cosecha -->
+            <Border Grid.Column="2" Style="{StaticResource CardPanel}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel DataContext="{Binding LaborSeleccionada}">
+                        <TextBlock Text="Detalle Operativo de Cosecha" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" Margin="0,0,0,12" />
+
+                        <Border Background="{StaticResource BrushAccentLight}" CornerRadius="8" Padding="12" Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock Text="{Binding LoteNombre}" FontSize="15" FontWeight="Bold" Foreground="#92400E" />
+                                <TextBlock Text="{Binding CodigoLabor}" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource BrushAccent}" />
+                                <TextBlock Text="{Binding TipoCultivo, StringFormat='Cultivo: {0}'}" FontSize="12" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Border>
+
+                        <TextBlock Text="RENDIMIENTO Y PRODUCTIVIDAD" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushTextLight}" Margin="0,4,0,8" />
+
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Superficie a Cosechar:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding HectareasLabor, StringFormat='{}{0:N0} Hectáreas'}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Meta Estimada:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding ToneladasEstimadas, StringFormat='{}{0:N1} Toneladas'}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Recolectado al Momento:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding ToneladasRecolectadas, StringFormat='{}{0:N1} Toneladas'}" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushPrimary}" HorizontalAlignment="Right" />
+                        </Grid>
+                        <Grid Margin="0,0,0,6">
+                            <TextBlock Text="Rendimiento Medio:" FontSize="12" Foreground="{StaticResource BrushTextMuted}" />
+                            <TextBlock Text="{Binding ResumenRinde}" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushAccent}" HorizontalAlignment="Right" />
+                        </Grid>
+
+                        <TextBlock Text="RECURSOS ASIGNADOS" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushTextLight}" Margin="0,10,0,8" />
+
+                        <TextBlock Text="Maquinaria y Tolvas:" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                        <Border Background="#F8FAFC" BorderBrush="{StaticResource BrushBorderLight}" BorderThickness="1" CornerRadius="6" Padding="8" Margin="0,2,0,8">
+                            <TextBlock Text="{Binding MaquinariaAsignada}" FontSize="12" FontWeight="SemiBold" TextWrapping="Wrap" />
+                        </Border>
+
+                        <TextBlock Text="Cuadrilla / Operadores:" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                        <Border Background="#F8FAFC" BorderBrush="{StaticResource BrushBorderLight}" BorderThickness="1" CornerRadius="6" Padding="8" Margin="0,2,0,8">
+                            <TextBlock Text="{Binding CuadrillaResponsable}" FontSize="12" FontWeight="SemiBold" TextWrapping="Wrap" />
+                        </Border>
+
+                        <TextBlock Text="Silo Destino Previsto:" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                        <Border Background="#F8FAFC" BorderBrush="{StaticResource BrushBorderLight}" BorderThickness="1" CornerRadius="6" Padding="8">
+                            <TextBlock Text="{Binding SiloDestinoSugerido}" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource BrushBlue}" TextWrapping="Wrap" />
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
