@@ -21,18 +21,16 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="📊 Generación de Reportes y Análisis Operativo" 
+                <TextBlock Text="📊 Reportes y Análisis" 
                            FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
-                <TextBlock Text="Consolidación de métricas de producción, mermas de flete y existencias de granos para toma de decisiones" 
-                           FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="0,3,0,0" />
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <Button Content="📥 Exportar Excel (.xlsx)" 
+                <Button Content="📥 Exportar Excel" 
                         Style="{StaticResource BtnSecondary}" 
                         Margin="0,0,10,0" 
                         Command="{Binding ExportarExcelCommand}" />
-                <Button Content="📑 Exportar PDF Oficial" 
+                <Button Content="📑 Exportar PDF" 
                         Style="{StaticResource BtnPrimary}" 
                         Command="{Binding ExportarPdfCommand}" />
             </StackPanel>
@@ -90,7 +88,7 @@
                 <!-- Encabezado de Vista Previa -->
                 <Grid Grid.Row="1" Margin="0,0,0,10">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Previsualización de Datos: " FontWeight="Bold" FontSize="14" Foreground="{StaticResource BrushTextMain}" />
+                        <TextBlock Text="Datos: " FontWeight="Bold" FontSize="14" Foreground="{StaticResource BrushTextMain}" />
                         <TextBlock Text="{Binding ReporteSeleccionado}" FontWeight="Bold" FontSize="14" Foreground="{StaticResource BrushPrimaryMedium}" />
                         <TextBlock Text=" • Período: " Foreground="{StaticResource BrushTextLight}" />
                         <TextBlock Text="{Binding PeriodoSeleccionado}" FontSize="13" Foreground="{StaticResource BrushTextMuted}" />

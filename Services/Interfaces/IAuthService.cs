@@ -9,6 +9,6 @@ namespace SiTech.AgroLogistica.Services.Interfaces
         bool IniciarSesion(string username, string password);
         bool IniciarSesionRapida(Usuario usuarioDemo);
         void CerrarSesion();
-        IReadOnlyList<Usuario> ObtenerUsuariosDemostracion();
+        IReadOnlyList<Usuario> ObtenerUsuariosSistema();
     }
 }

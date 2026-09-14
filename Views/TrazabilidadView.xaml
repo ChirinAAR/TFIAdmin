@@ -23,8 +23,6 @@
             <StackPanel Grid.Column="0">
                 <TextBlock Text="🔍 Trazabilidad Integral y Cadena de Custodia" 
                            FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
-                <TextBlock Text="Seguimiento paso a paso del grano: lote de origen, siembra, cosecha, flete, acopio y destino de exportación" 
-                           FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="0,3,0,0" />
             </StackPanel>
 
             <Button Grid.Column="1" 

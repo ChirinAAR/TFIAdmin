@@ -21,10 +21,8 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="🌱 Monitoreo de Cultivos y Parcelas Agrícolas" 
+                <TextBlock Text="🌱 Cultivos" 
                            FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
-                <TextBlock Text="Seguimiento agronómico de lotes en el NOA: fenología, humedad de suelo e índice verde NDVI" 
-                           FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="0,3,0,0" />
             </StackPanel>
 
             <Button Grid.Column="1" 

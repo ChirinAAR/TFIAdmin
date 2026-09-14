@@ -1,5 +1,4 @@
 using System;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
 using SiTech.AgroLogistica.Models;
 using SiTech.AgroLogistica.Services.Interfaces;
@@ -22,13 +21,8 @@ namespace SiTech.AgroLogistica.ViewModels
             _authService = authService;
             _onLoginExitoso = onLoginExitoso;
 
-            UsuariosDemo = new ObservableCollection<Usuario>(_authService.ObtenerUsuariosDemostracion());
-
             IniciarSesionCommand = new RelayCommand(EjecutarIniciarSesion);
-            SeleccionarPerfilDemoCommand = new RelayCommand(p => EjecutarPerfilDemo(p as Usuario));
         }
-
-        public ObservableCollection<Usuario> UsuariosDemo { get; }
 
         public string Username
         {
@@ -55,7 +49,6 @@ namespace SiTech.AgroLogistica.ViewModels
         }
 
         public ICommand IniciarSesionCommand { get; }
-        public ICommand SeleccionarPerfilDemoCommand { get; }
 
         private void EjecutarIniciarSesion()
         {
@@ -69,16 +62,7 @@ namespace SiTech.AgroLogistica.ViewModels
             else
             {
                 HayError = true;
-                MensajeError = "Credenciales incorrectas. Puede usar un perfil demo de acceso rápido.";
-            }
-        }
-
-        private void EjecutarPerfilDemo(Usuario? usuario)
-        {
-            if (usuario == null) return;
-            if (_authService.IniciarSesionRapida(usuario) && _authService.UsuarioActual != null)
-            {
-                _onLoginExitoso(_authService.UsuarioActual);
+                MensajeError = "Credenciales de acceso incorrectas. Verifique su usuario y contraseña.";
             }
         }
     }

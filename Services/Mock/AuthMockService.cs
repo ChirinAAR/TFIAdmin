@@ -96,7 +96,7 @@ namespace SiTech.AgroLogistica.Services.Mock
             _usuarioActual = null;
         }
 
-        public IReadOnlyList<Usuario> ObtenerUsuariosDemostracion()
+        public IReadOnlyList<Usuario> ObtenerUsuariosSistema()
         {
             return _usuariosDemo.AsReadOnly();
         }

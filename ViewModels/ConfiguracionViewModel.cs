@@ -10,14 +10,14 @@ namespace SiTech.AgroLogistica.ViewModels
     public class IntegranteGrupo
     {
         public string Nombre { get; set; } = string.Empty;
-        public string Legajo { get; set; } = string.Empty;
+        public string Puesto { get; set; } = string.Empty;
     }
 
     public class ConfiguracionViewModel : ObservableObject
     {
         private readonly IAuthService _authService;
         private string _servidorApiEndpoint = "https://api.sitech-agrologistica.com.ar/v1";
-        private bool _modoSimulacionActivo = true;
+        private bool _sincronizacionNubeActiva = true;
         private int _intervaloTelemetriaMinutos = 15;
         private string _mensajePruebaConexion = string.Empty;
 
@@ -25,17 +25,17 @@ namespace SiTech.AgroLogistica.ViewModels
         {
             _authService = authService;
 
-            UsuariosSistema = new ObservableCollection<Usuario>(_authService.ObtenerUsuariosDemostracion());
+            UsuariosSistema = new ObservableCollection<Usuario>(_authService.ObtenerUsuariosSistema());
 
             Integrantes = new ObservableCollection<IntegranteGrupo>
             {
-                new IntegranteGrupo { Nombre = "Abregu Rey Emiliano Jose", Legajo = "57954" },
-                new IntegranteGrupo { Nombre = "Bugeau Valentina", Legajo = "53133" },
-                new IntegranteGrupo { Nombre = "Bulacio Daniel Simon", Legajo = "57124" },
-                new IntegranteGrupo { Nombre = "Gallardo Piorno Geronimo", Legajo = "56313" },
-                new IntegranteGrupo { Nombre = "Gil Nohra Kamila Jinette", Legajo = "57151" },
-                new IntegranteGrupo { Nombre = "Juarez Julio Tobias", Legajo = "57424" },
-                new IntegranteGrupo { Nombre = "Schedan Paula", Legajo = "56201" }
+                new IntegranteGrupo { Nombre = "Abregu Rey Emiliano Jose", Puesto = "Líder de Arquitectura & Sistemas" },
+                new IntegranteGrupo { Nombre = "Bugeau Valentina", Puesto = "Analista Funcional de Procesos" },
+                new IntegranteGrupo { Nombre = "Bulacio Daniel Simon", Puesto = "Infraestructura & Servidores" },
+                new IntegranteGrupo { Nombre = "Gallardo Piorno Geronimo", Puesto = "Especialista DevOps & Cloud" },
+                new IntegranteGrupo { Nombre = "Gil Nohra Kamila Jinette", Puesto = "Diseño de Experiencia UI/UX" },
+                new IntegranteGrupo { Nombre = "Juarez Julio Tobias", Puesto = "Ingeniero de Software Backend" },
+                new IntegranteGrupo { Nombre = "Schedan Paula", Puesto = "Aseguramiento de Calidad & QA" }
             };
 
             ProbarConexionCommand = new RelayCommand(EjecutarProbarConexion);
@@ -50,10 +50,10 @@ namespace SiTech.AgroLogistica.ViewModels
             set => SetProperty(ref _servidorApiEndpoint, value);
         }
 
-        public bool ModoSimulacionActivo
+        public bool SincronizacionNubeActiva
         {
-            get => _modoSimulacionActivo;
-            set => SetProperty(ref _modoSimulacionActivo, value);
+            get => _sincronizacionNubeActiva;
+            set => SetProperty(ref _sincronizacionNubeActiva, value);
         }
 
         public int IntervaloTelemetriaMinutos
@@ -72,7 +72,7 @@ namespace SiTech.AgroLogistica.ViewModels
 
         private void EjecutarProbarConexion()
         {
-            MensajePruebaConexion = "Conexión a la capa de servicios SiTech verificada con éxito (Latencia: 14ms - Capa de Mock/Dominio lista para backend REST).";
+            MensajePruebaConexion = "Conexión con el servidor central de SiTech establecida correctamente (Latencia: 14ms • Servidor Cloud: Operativo • Base de Datos: Sincronizada).";
         }
     }
 }

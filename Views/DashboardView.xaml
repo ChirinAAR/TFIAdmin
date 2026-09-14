@@ -17,14 +17,10 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="Panel de Control Ejecutivo AgroLogística" 
+                    <TextBlock Text="Panel de Control" 
                                FontSize="22" 
                                FontWeight="Bold" 
                                Foreground="{StaticResource BrushTextMain}" />
-                    <TextBlock Text="Monitoreo integral de operaciones productivas, cosechas, logística y acopio en el NOA" 
-                               FontSize="13" 
-                               Foreground="{StaticResource BrushTextMuted}" 
-                               Margin="0,4,0,0" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
@@ -89,13 +85,10 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0">
-                                <TextBlock Text="🚛 Flota de Transporte y Envíos en Curso" 
+                                <TextBlock 
                                            FontSize="16" 
                                            FontWeight="Bold" 
-                                           Foreground="{StaticResource BrushTextMain}" />
-                                <TextBlock Text="Seguimiento de cartas de porte y avance en ruta a acopios" 
-                                           FontSize="12" 
-                                           Foreground="{StaticResource BrushTextMuted}" />
+                                           Foreground="{StaticResource BrushTextMain}" ><Run Text="🚛 "/><Run Language="es-ar" Text="Seguimiento Transporte"/></TextBlock>
                             </StackPanel>
                             <Button Grid.Column="1" 
                                     Content="Ver Todo el Transporte" 
@@ -218,10 +211,10 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- Accesos Rápidos de Demostración -->
+                    <!-- Accesos Rápidos a Módulos -->
                     <Border Style="{StaticResource CardPanel}">
                         <StackPanel>
-                            <TextBlock Text="⚡ Acceso Rápido a Módulos" 
+                            <TextBlock Text="⚡ Acceso Rápido" 
                                        FontSize="15" 
                                        FontWeight="Bold" 
                                        Foreground="{StaticResource BrushTextMain}" 
@@ -255,7 +248,7 @@
                                     Command="{Binding NavegarCommand}" 
                                     CommandParameter="Trazabilidad" />
 
-                            <Button Content="📊 Generar Reportes Ejecutivos" 
+                            <Button Content="📊 Generar Reportes" 
                                     Style="{StaticResource BtnPrimary}" 
                                     HorizontalContentAlignment="Left"
                                     Command="{Binding NavegarCommand}" 

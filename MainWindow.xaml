@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:SiTech.AgroLogistica.ViewModels"
         mc:Ignorable="d"
-        Title="SiTech AgroLogística - Plataforma de Gestión Agroindustrial (NOA) | TFI 2026" 
+        Title="SiTech AgroLogística - Plataforma de Gestión Agroindustrial" 
         Height="840" Width="1340"
         MinHeight="680" MinWidth="1080"
         WindowStartupLocation="CenterScreen"
@@ -52,7 +52,6 @@
                                     <TextBlock Text="SiTech" FontSize="18" FontWeight="Bold" Foreground="White" />
                                     <TextBlock Text=" AgroLogística" FontSize="18" FontWeight="Light" Foreground="#86EFAC" />
                                 </StackPanel>
-                                <TextBlock Text="Sistemas y Tecnologías para el NOA • UTN TFI 2026" FontSize="10" Foreground="#A7F3D0" />
                             </StackPanel>
                         </StackPanel>
 
@@ -82,7 +81,7 @@
 
                     <!-- Fila Inferior: Menú de Pestañas de Navegación -->
                     <Border Grid.Row="1" Background="#11331B" CornerRadius="8" Padding="4,2">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
                             <StackPanel Orientation="Horizontal">
 
                                 <!-- 1. Dashboard -->
@@ -214,8 +213,8 @@
                                     </Button.Style>
                                 </Button>
 
-                                <!-- 9. Campañas -->
-                                <Button Content="🌾 Campañas" Command="{Binding NavegarCommand}" CommandParameter="Campanas">
+                                <!-- 9. Campañas / Proyectos -->
+                                <Button Content="🌾 Proyectos" Command="{Binding NavegarCommand}" CommandParameter="Campanas">
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource BtnNavTab}">
                                             <Style.Triggers>

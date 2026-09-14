@@ -21,10 +21,8 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="🚚 Logística y Despacho de Transporte de Cargas" 
+                <TextBlock Text="🚚 Transporte de Cargas" 
                            FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
-                <TextBlock Text="Control de flota, emisión y seguimiento de Cartas de Porte Electrónicas (CTG) desde el lote al acopio o puerto" 
-                           FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="0,3,0,0" />
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">

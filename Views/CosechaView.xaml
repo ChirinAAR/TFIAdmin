@@ -23,7 +23,7 @@
             <StackPanel Grid.Column="0">
                 <TextBlock Text="🚜 Planificación y Gestión de Cosecha" 
                            FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
-                <TextBlock Text="Seguimiento de labores de recolección, rindes reales por hectárea, cuadrillas y maquinaria en campo" 
+                <TextBlock 
                            FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="0,3,0,0" />
             </StackPanel>
 

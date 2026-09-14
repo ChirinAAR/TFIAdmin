@@ -30,8 +30,8 @@ namespace SiTech.AgroLogistica.Tests
             auth.CerrarSesion();
             Assert.IsNull(auth.UsuarioActual);
 
-            // Login rápido con perfil demo
-            var perfiles = auth.ObtenerUsuariosDemostracion();
+            // Login con usuario del sistema
+            var perfiles = auth.ObtenerUsuariosSistema();
             Assert.IsTrue(perfiles.Count >= 4);
             var agronomo = perfiles.First(p => p.Username == "agronomo");
             auth.IniciarSesionRapida(agronomo);
@@ -150,10 +150,11 @@ namespace SiTech.AgroLogistica.Tests
             Assert.IsFalse(mainVM.EstaAutenticado);
             Assert.IsInstanceOfType(mainVM.CurrentViewModel, typeof(LoginViewModel));
 
-            // Simular Login rápido
+            // Simular Login
             var loginVM = (LoginViewModel)mainVM.CurrentViewModel!;
-            var adminUser = auth.ObtenerUsuariosDemostracion().First(u => u.Username == "admin");
-            loginVM.SeleccionarPerfilDemoCommand.Execute(adminUser);
+            loginVM.Username = "admin";
+            loginVM.Password = "123";
+            loginVM.IniciarSesionCommand.Execute(null);
 
             // Ahora debe estar autenticado y en Dashboard
             Assert.IsTrue(mainVM.EstaAutenticado);

@@ -17,10 +17,8 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="🌤️ Clima Regional y Alertas Tempranas del NOA" 
+                    <TextBlock Text="🌤️ Clima" 
                                FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
-                    <TextBlock Text="Red de estaciones meteorológicas zonales, pronóstico operativo y prevención de riesgos agrícolas" 
-                               FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="0,3,0,0" />
                 </StackPanel>
 
                 <Button Grid.Column="1" 

@@ -23,8 +23,6 @@
             <StackPanel Grid.Column="0">
                 <TextBlock Text="🏭 Gestión de Acopio, Silos y Stock de Granos" 
                            FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
-                <TextBlock Text="Control de capacidad en silos verticales, celdas y silos bolsa, con monitoreo de humedad y temperatura" 
-                           FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="0,3,0,0" />
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">
