@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1200">
+             d:DesignHeight="950" d:DesignWidth="1200">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="24,18,24,24">
@@ -17,147 +17,211 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="🌤️ Clima" 
+                    <TextBlock Text="🌤️ Monitoreo Agroclimático &amp; Estaciones Telemétricas" 
                                FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                    <TextBlock Text="{Binding EstadoRedSensores}" 
+                               FontSize="12" Foreground="{StaticResource BrushPrimaryMedium}" Margin="0,3,0,0" />
                 </StackPanel>
 
-                <Button Grid.Column="1" 
-                        Content="+ Emitir Nueva Alerta Preventiva" 
-                        Style="{StaticResource BtnDanger}" 
-                        Command="{Binding AbrirNuevaAlertaCommand}" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Estación activa:" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,0" Foreground="{StaticResource BrushTextMuted}" />
+                    <ComboBox ItemsSource="{Binding Estaciones}" 
+                              SelectedItem="{Binding EstacionSeleccionada, Mode=TwoWay}" 
+                              DisplayMemberPath="NombreEstacion" 
+                              Width="260" 
+                              Height="34"
+                              Margin="0,0,10,0" />
+                    <Button Content="🔄 Actualizar Sensores" 
+                            Style="{StaticResource BtnSecondary}" 
+                            Command="{Binding ActualizarDatosCommand}" 
+                            FontSize="11" />
+                </StackPanel>
             </Grid>
 
-            <!-- Diálogo de Nueva Alerta -->
-            <Border Style="{StaticResource CardPanel}" 
-                    Background="#FEF2F2" 
-                    BorderBrush="{StaticResource BrushDanger}"
-                    Visibility="{Binding MostrarDialogoNuevaAlerta, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <!-- Resumen de Telemetría en Tiempo Real de la Estación Seleccionada -->
+            <Border Style="{StaticResource CardPanel}" Margin="0,0,0,16">
                 <StackPanel>
-                    <TextBlock Text="Emitir Nueva Alerta Agroclimática u Operativa" FontWeight="Bold" FontSize="15" Foreground="{StaticResource BrushDanger}" Margin="0,0,0,10" />
-                    <UniformGrid Columns="3" Margin="0,0,0,8">
-                        <StackPanel Margin="6">
-                            <TextBlock Text="Título de la Alerta" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
-                            <TextBox Text="{Binding NuevoTitulo, UpdateSourceTrigger=PropertyChanged}" />
+                    <Grid Margin="0,0,0,12">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding EstacionSeleccionada.NombreEstacion}" FontSize="16" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                            <TextBlock Text=" • " Foreground="{StaticResource BrushTextLight}" />
+                            <TextBlock Text="{Binding EstacionSeleccionada.Provincia}" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource BrushPrimaryMedium}" />
+                            <TextBlock Text=" (Telemetría Satelital LoRa/4G)" FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="6,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
-                        <StackPanel Margin="6">
-                            <TextBlock Text="Tipo de Fenómeno" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
-                            <TextBox Text="{Binding NuevoTipo, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
-                        <StackPanel Margin="6">
-                            <TextBlock Text="Severidad (Crítica / Media / Baja)" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
-                            <TextBox Text="{Binding NuevaSeveridad, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
+                        <TextBlock Text="{Binding EstacionSeleccionada.UltimaLectura, StringFormat='Última captura: {0:dd/MM/yyyy HH:mm} hs'}" 
+                                   HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                   FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                    </Grid>
+
+                    <!-- Cuadrícula de 4 Métricas Clave -->
+                    <UniformGrid Columns="4" Margin="0,0,0,6">
+                        <!-- Tarjeta 1: Temperatura -->
+                        <Border Background="#F0FDF4" BorderBrush="#BBF7D0" BorderThickness="1" CornerRadius="8" Padding="14" Margin="4">
+                            <StackPanel>
+                                <TextBlock Text="🌡️ TEMPERATURA &amp; CIELO" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushPrimaryMedium}" />
+                                <Grid Margin="0,8,0,4">
+                                    <TextBlock Text="{Binding EstacionSeleccionada.TemperaturaC, StringFormat='{}{0:F1} °C'}" FontSize="28" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                                    <TextBlock Text="{Binding EstacionSeleccionada.EstadoCielo}" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource BrushTextMuted}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                </Grid>
+                                <TextBlock Text="{Binding EstacionSeleccionada.SensacionTermicaC, StringFormat='Sensación Térmica: {0:F1} °C'}" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Tarjeta 2: Humedad y Presión -->
+                        <Border Background="#F8FAFC" BorderBrush="{StaticResource BrushBorderLight}" BorderThickness="1" CornerRadius="8" Padding="14" Margin="4">
+                            <StackPanel>
+                                <TextBlock Text="💧 HUMEDAD &amp; ROCÍO" FontSize="11" FontWeight="Bold" Foreground="#0284C7" />
+                                <Grid Margin="0,8,0,4">
+                                    <TextBlock Text="{Binding EstacionSeleccionada.HumedadRelativaPorcentaje, StringFormat='{}{0:F0}%'}" FontSize="28" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                                    <TextBlock Text="{Binding EstacionSeleccionada.PresionHpa, StringFormat='{}{0:F0} hPa'}" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource BrushTextMuted}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                </Grid>
+                                <TextBlock Text="{Binding EstacionSeleccionada.PuntoRocioC, StringFormat='Punto de Rocío: {0:F1} °C'}" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Tarjeta 3: Viento y Ráfagas -->
+                        <Border Background="#F8FAFC" BorderBrush="{StaticResource BrushBorderLight}" BorderThickness="1" CornerRadius="8" Padding="14" Margin="4">
+                            <StackPanel>
+                                <TextBlock Text="💨 DINÁMICA DE VIENTO" FontSize="11" FontWeight="Bold" Foreground="#475569" />
+                                <Grid Margin="0,8,0,4">
+                                    <TextBlock Text="{Binding EstacionSeleccionada.VientoVelocidadKmH, StringFormat='{}{0:F0} km/h'}" FontSize="28" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                                    <TextBlock Text="{Binding EstacionSeleccionada.VientoDireccion, StringFormat='Dir: {0}'}" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushPrimaryMedium}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                </Grid>
+                                <TextBlock Text="{Binding EstacionSeleccionada.RafagasKmH, StringFormat='Ráfagas máx: {0:F0} km/h'}" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Tarjeta 4: Precipitaciones y Balance -->
+                        <Border Background="#EFF6FF" BorderBrush="#BFDBFE" BorderThickness="1" CornerRadius="8" Padding="14" Margin="4">
+                            <StackPanel>
+                                <TextBlock Text="🌧️ PLUVIOMETRÍA &amp; ETo" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushBlue}" />
+                                <Grid Margin="0,8,0,4">
+                                    <TextBlock Text="{Binding EstacionSeleccionada.PrecipitacionUltimas24hMm, StringFormat='{}{0:F1} mm'}" FontSize="28" FontWeight="Bold" Foreground="{StaticResource BrushBlue}" />
+                                    <TextBlock Text="{Binding EstacionSeleccionada.LluviaAcumuladaMesMm, StringFormat='Mes: {0:F1} mm'}" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource BrushTextMuted}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                </Grid>
+                                <TextBlock Text="{Binding EstacionSeleccionada.EvapotranspiracionEtoMm, StringFormat='Evapotranspiración: {0:F1} mm/d'}" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                            </StackPanel>
+                        </Border>
                     </UniformGrid>
-                    <UniformGrid Columns="2" Margin="0,0,0,8">
-                        <StackPanel Margin="6">
-                            <TextBlock Text="Zona Afectada (Departamentos NOA)" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
-                            <TextBox Text="{Binding NuevaZona, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
-                        <StackPanel Margin="6">
-                            <TextBlock Text="Recomendación Operativa para Campo" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
-                            <TextBox Text="{Binding NuevaRecomendacion, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
-                    </UniformGrid>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,6,0">
-                        <Button Content="Cancelar" Style="{StaticResource BtnSecondary}" Margin="0,0,10,0" Command="{Binding CancelarNuevaAlertaCommand}" />
-                        <Button Content="Emitir y Notificar a la Flota" Style="{StaticResource BtnDanger}" Command="{Binding GuardarNuevaAlertaCommand}" />
-                    </StackPanel>
                 </StackPanel>
             </Border>
 
-            <!-- Cuadrícula de Estaciones Meteorológicas -->
-            <TextBlock Text="RED DE ESTACIONES METEOROLÓGICAS AGRO-NOA" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushTextLight}" Margin="0,0,0,10" />
-            <ItemsControl ItemsSource="{Binding Estaciones}" Margin="0,0,0,16">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="4" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border Style="{StaticResource CardPanel}" Margin="6" Padding="14">
-                            <StackPanel>
-                                <Grid>
-                                    <TextBlock Text="{Binding NombreEstacion}" FontWeight="Bold" FontSize="12" Foreground="{StaticResource BrushTextMain}" />
-                                    <TextBlock Text="{Binding Provincia}" FontSize="11" Foreground="{StaticResource BrushPrimaryMedium}" HorizontalAlignment="Right" />
-                                </Grid>
+            <!-- Ventana Operativa de Pulverización y Labores Agronómicas (Delta T) -->
+            <Border Style="{StaticResource CardPanel}" Background="#FDF8F6" BorderBrush="#FDBA74" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
 
-                                <Grid Margin="0,10,0,6">
-                                    <TextBlock Text="{Binding TemperaturaC, StringFormat='{}{0:F1}°C'}" FontSize="26" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
-                                    <TextBlock Text="{Binding EstadoCielo}" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource BrushTextMuted}" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                </Grid>
+                    <StackPanel Grid.Column="0" Margin="0,0,16,0">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                            <TextBlock Text="🎯 VENTANA OPERATIVA PARA APLICACIONES FITOSANITARIAS &amp; PULVERIZACIÓN" FontSize="12" FontWeight="Bold" Foreground="#9A3412" />
+                            <Border Background="#EA580C" CornerRadius="4" Padding="6,2" Margin="10,0,0,0">
+                                <TextBlock Text="CRITERIO TÉCNICO INTA / CASAFE" Foreground="White" FontSize="9" FontWeight="Bold" />
+                            </Border>
+                        </StackPanel>
 
-                                <Border Height="1" Background="{StaticResource BrushBorderLight}" Margin="0,4,0,8" />
+                        <TextBlock Text="{Binding EstacionSeleccionada.DiagnosticoVentana}" 
+                                   FontSize="13" Foreground="{StaticResource BrushTextMain}" TextWrapping="Wrap" Margin="0,0,0,10" />
 
-                                <Grid Margin="0,0,0,4">
-                                    <TextBlock Text="Humedad Relativa:" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
-                                    <TextBlock Text="{Binding HumedadRelativaPorcentaje, StringFormat='{}{0:F0}%'}" FontSize="11" FontWeight="SemiBold" HorizontalAlignment="Right" />
-                                </Grid>
-                                <Grid Margin="0,0,0,4">
-                                    <TextBlock Text="Viento Zonal:" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
-                                    <TextBlock Text="{Binding VientoVelocidadKmH, StringFormat='{}{0:F0} km/h'}" FontSize="11" FontWeight="SemiBold" HorizontalAlignment="Right" />
-                                </Grid>
-                                <Grid Margin="0,0,0,4">
-                                    <TextBlock Text="Precipitación 24h:" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
-                                    <TextBlock Text="{Binding PrecipitacionUltimas24hMm, StringFormat='{}{0:F1} mm'}" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushBlue}" HorizontalAlignment="Right" />
-                                </Grid>
-                            </StackPanel>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="#FFF" BorderBrush="#FED7AA" BorderThickness="1" CornerRadius="6" Padding="10,6" Margin="0,0,10,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Delta T (°C): " FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                                    <TextBlock Text="{Binding EstacionSeleccionada.DeltaTC, StringFormat='{}{0:F1} °C'}" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                                    <TextBlock Text=" (Rango óptimo: 2 - 8°C)" FontSize="10" Foreground="{StaticResource BrushTextLight}" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Border>
+                            <Border Background="#FFF" BorderBrush="#FED7AA" BorderThickness="1" CornerRadius="6" Padding="10,6" Margin="0,0,10,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Radiación Solar: " FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                                    <TextBlock Text="{Binding EstacionSeleccionada.RadiacionSolarWm2, StringFormat='{}{0:F0} W/m²'}" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                                </StackPanel>
+                            </Border>
+                            <Border Background="#FFF" BorderBrush="#FED7AA" BorderThickness="1" CornerRadius="6" Padding="10,6">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Índice UV: " FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                                    <TextBlock Text="{Binding EstacionSeleccionada.IndiceUV}" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
 
-            <!-- Centro de Alertas Activas e Historial -->
-            <Border Style="{StaticResource CardPanel}">
+                    <!-- Estado Sintético de la Ventana -->
+                    <Border Grid.Column="1" Background="White" BorderBrush="#FDBA74" BorderThickness="1" CornerRadius="8" Padding="14" VerticalAlignment="Center">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="ESTADO DE VENTANA" FontSize="10" FontWeight="Bold" Foreground="{StaticResource BrushTextMuted}" HorizontalAlignment="Center" />
+                            <TextBlock Text="{Binding EstacionSeleccionada.CondicionPulverizacion}" FontSize="16" FontWeight="Bold" Foreground="#C2410C" Margin="0,4,0,4" HorizontalAlignment="Center" />
+                            <TextBlock Text="Pulverización terrestre y aérea supervisada" FontSize="10" Foreground="{StaticResource BrushTextLight}" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Pronóstico Meteorológico Extendido a 5 Días -->
+            <Border Style="{StaticResource CardPanel}" Margin="0,0,0,16">
                 <StackPanel>
-                    <TextBlock Text="Centro de Gestión de Alertas y Riesgos Climáticos" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" Margin="0,0,0,12" />
+                    <Grid Margin="0,0,0,12">
+                        <TextBlock Text="📅 Pronóstico Extendido a 5 Días para la Zona Productiva" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                        <TextBlock Text="Modelado Numérico ECMWF / SMN" HorizontalAlignment="Right" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                    </Grid>
 
-                    <ItemsControl ItemsSource="{Binding Alertas}">
+                    <ItemsControl ItemsSource="{Binding PronosticoExtendido}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="5" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Background="#F8FAFC" 
-                                        BorderBrush="{StaticResource BrushBorderLight}" 
-                                        BorderThickness="1" 
-                                        CornerRadius="8" 
-                                        Padding="14" 
-                                        Margin="0,0,0,10">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
+                                <Border Background="#F8FAFC" BorderBrush="{StaticResource BrushBorderLight}" BorderThickness="1" CornerRadius="8" Padding="12" Margin="4">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="{Binding DiaSemana}" FontWeight="Bold" FontSize="13" Foreground="{StaticResource BrushTextMain}" HorizontalAlignment="Center" />
+                                        <TextBlock Text="{Binding FechaCorta}" FontSize="10" Foreground="{StaticResource BrushTextMuted}" Margin="0,1,0,8" HorizontalAlignment="Center" />
 
-                                        <StackPanel Grid.Column="0">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Border Background="{StaticResource BrushDangerLight}" CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
-                                                    <TextBlock Text="{Binding NivelSeveridad}" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushDanger}" />
-                                                </Border>
-                                                <TextBlock Text="{Binding Titulo}" FontWeight="Bold" FontSize="13" Foreground="{StaticResource BrushTextMain}" VerticalAlignment="Center" />
-                                                <TextBlock Text=" • " Foreground="{StaticResource BrushTextLight}" VerticalAlignment="Center" />
-                                                <TextBlock Text="{Binding ZonaAfectada}" FontSize="12" Foreground="{StaticResource BrushTextMuted}" VerticalAlignment="Center" />
-                                            </StackPanel>
+                                        <TextBlock Text="{Binding Icono}" FontSize="28" Margin="0,0,0,6" HorizontalAlignment="Center" />
+                                        <TextBlock Text="{Binding Condicion}" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource BrushTextMain}" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,0,0,8" />
 
-                                            <TextBlock Text="{Binding Descripcion}" FontSize="12" Foreground="{StaticResource BrushTextMain}" Margin="0,6,0,4" TextWrapping="Wrap" />
-
-                                            <Border Background="#FEF3C7" CornerRadius="6" Padding="8,4" Margin="0,4,0,0">
-                                                <TextBlock Text="{Binding RecomendacionOperativa, StringFormat='Acción recomendada: {0}'}" FontSize="11" FontWeight="SemiBold" Foreground="#92400E" TextWrapping="Wrap" />
-                                            </Border>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,6">
+                                            <TextBlock Text="{Binding TempMinC, StringFormat='{}{0:F0}°'}" FontSize="12" FontWeight="SemiBold" Foreground="#0284C7" />
+                                            <TextBlock Text=" / " FontSize="12" Foreground="{StaticResource BrushTextLight}" />
+                                            <TextBlock Text="{Binding TempMaxC, StringFormat='{}{0:F0}°'}" FontSize="12" FontWeight="Bold" Foreground="#DC2626" />
                                         </StackPanel>
 
-                                        <!-- Botón de Resolver -->
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="14,0,0,0">
-                                            <Button Content="Marcar Tratada" 
-                                                    Style="{StaticResource BtnSecondary}" 
-                                                    FontSize="11" 
-                                                    Command="{Binding DataContext.ResolverAlertaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                    CommandParameter="{Binding}"
-                                                    Visibility="{Binding Activa, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                        </StackPanel>
-                                    </Grid>
+                                        <TextBlock Text="{Binding ProbabilidadLluviaPorcentaje, StringFormat='🌧️ {0}% prob.'}" FontSize="10" Foreground="{StaticResource BrushBlue}" Margin="0,0,0,4" HorizontalAlignment="Center" />
+                                        <TextBlock Text="{Binding VientoMaxKmH, StringFormat='💨 Máx: {0:F0} km/h'}" FontSize="10" Foreground="{StaticResource BrushTextMuted}" Margin="0,0,0,8" HorizontalAlignment="Center" />
+
+                                        <Border Background="#E2E8F0" CornerRadius="4" Padding="6,2">
+                                            <TextBlock Text="{Binding EstadoVentana, StringFormat='Ventana: {0}'}" FontSize="9" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" HorizontalAlignment="Center" />
+                                        </Border>
+                                    </StackPanel>
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                </StackPanel>
+            </Border>
+
+            <!-- Red de Estaciones de Campo (Comparativa General) -->
+            <Border Style="{StaticResource CardPanel}">
+                <StackPanel>
+                    <TextBlock Text="🌐 Estado de Todas las Estaciones Agro-NOA" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" Margin="0,0,0,12" />
+
+                    <DataGrid ItemsSource="{Binding Estaciones}" 
+                              SelectedItem="{Binding EstacionSeleccionada, Mode=TwoWay}"
+                              Height="180">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Estación" Binding="{Binding NombreEstacion}" Width="240" FontWeight="Bold" />
+                            <DataGridTextColumn Header="Provincia" Binding="{Binding Provincia}" Width="100" />
+                            <DataGridTextColumn Header="Temp (°C)" Binding="{Binding TemperaturaC, StringFormat='{}{0:F1}°C'}" Width="90" FontWeight="SemiBold" />
+                            <DataGridTextColumn Header="Humedad" Binding="{Binding HumedadRelativaPorcentaje, StringFormat='{}{0:F0}%'}" Width="90" />
+                            <DataGridTextColumn Header="Viento" Binding="{Binding VientoVelocidadKmH, StringFormat='{}{0:F0} km/h'}" Width="100" />
+                            <DataGridTextColumn Header="Lluvia 24h" Binding="{Binding PrecipitacionUltimas24hMm, StringFormat='{}{0:F1} mm'}" Width="100" />
+                            <DataGridTextColumn Header="Delta T" Binding="{Binding DeltaTC, StringFormat='{}{0:F1}°C'}" Width="90" />
+                            <DataGridTextColumn Header="Estado Aplicaciones" Binding="{Binding CondicionPulverizacion}" Width="*" FontWeight="SemiBold" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </StackPanel>
             </Border>
 

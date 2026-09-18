@@ -44,7 +44,7 @@
                 CornerRadius="6" 
                 Padding="12,8" 
                 Margin="24,0,24,10"
-                Visibility="{Binding MensajeAccion, Converter={StaticResource BooleanToVisibilityConverter}}">
+                Visibility="{Binding MensajeAccion, Converter={StaticResource StringToVisibilityConverter}}">
             <TextBlock Text="{Binding MensajeAccion}" FontWeight="SemiBold" Foreground="#047857" FontSize="12" />
         </Border>
 

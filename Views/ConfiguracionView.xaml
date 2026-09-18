@@ -4,52 +4,343 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" 
-             d:DesignHeight="850" d:DesignWidth="1200">
+             d:DesignHeight="1150" d:DesignWidth="1200">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="24,18,24,24">
 
-            <!-- Header -->
+            <!-- Header y Acciones Globales -->
             <Grid Margin="0,0,0,16">
-                <StackPanel>
-                    <TextBlock Text="⚙️ Configuración del Sistema" 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="⚙️ Configuración del Sistema &amp; Parámetros Agro-Logísticos" 
                                FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
-                    <TextBlock Text="Administración de servidores, telemetría y perfiles de acceso autorizados" 
+                    <TextBlock Text="Ajustes de balanzas de pesaje, fiscalización CTG/AFIP, control de silos, telemetría de flota, imágenes satelitales y canales de alerta" 
                                FontSize="12" Foreground="{StaticResource BrushTextMuted}" Margin="0,3,0,0" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Content="↺ Restablecer Valores" 
+                            Style="{StaticResource BtnSecondary}" 
+                            Command="{Binding RestablecerValoresCommand}" 
+                            Margin="0,0,10,0" 
+                            FontSize="11" />
+                    <Button Content="💾 Guardar Parámetros" 
+                            Style="{StaticResource BtnPrimary}" 
+                            Command="{Binding GuardarConfiguracionCommand}" 
+                            FontSize="11" />
                 </StackPanel>
             </Grid>
 
+            <!-- Toast Banner de Notificación de Guardado -->
+            <Border Background="#DCFCE7" 
+                    BorderBrush="#16A34A" 
+                    BorderThickness="1" 
+                    CornerRadius="6" 
+                    Padding="12,10" 
+                    Margin="0,0,0,16"
+                    Visibility="{Binding MensajeGuardado, Converter={StaticResource StringToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="🔔 " FontSize="13" />
+                    <TextBlock Text="{Binding MensajeGuardado}" FontWeight="Bold" FontSize="12" Foreground="#15803D" VerticalAlignment="Center" />
+                </StackPanel>
+            </Border>
+
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.7*" />
+                    <ColumnDefinition Width="1.1*" />
                     <ColumnDefinition Width="16" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
-                <!-- Columna Izquierda: Parámetros del Sistema y Usuarios -->
+                <!-- Columna Izquierda: Balanza, Silos, Flota -->
                 <StackPanel Grid.Column="0">
 
-                    <!-- Parámetros Técnicos -->
+                    <!-- 1. Balanzas & AFIP CTG -->
+                    <Border Style="{StaticResource CardPanel}" Margin="0,0,0,16">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,10">
+                                <TextBlock Text="⚖️ Balanzas Electrónicas &amp; AFIP CTG" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" />
+                                <Border Background="#E0F2FE" CornerRadius="4" Padding="6,2" HorizontalAlignment="Right">
+                                    <TextBlock Text="RESOLUCIÓN GENERAL AFIP / SENASA" Foreground="#0369A1" FontSize="9" FontWeight="Bold" />
+                                </Border>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Puerto de Comunicación / Enlace:" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <ComboBox ItemsSource="{Binding ListaPuertosBalanza}" SelectedItem="{Binding PuertoBalanza}" Height="34" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Protocolo del Cabezal Indicador:" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <ComboBox ItemsSource="{Binding ListaModelosBalanza}" SelectedItem="{Binding ModeloBalanza}" Height="34" />
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Tolerancia de Pesaje Aceptable (kg):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding ToleranciaPesajeKg, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Ambiente Web Service AFIP (WSAA):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <ComboBox ItemsSource="{Binding ListaAmbientesAfip}" SelectedItem="{Binding AmbienteAfip}" Height="34" />
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="CUIT Titular de la Planta / Acopio:" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding CuitTitular, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Punto de Emisión Oficial CTG:" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding PuntoEmisionCtg, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+                            </Grid>
+
+                            <CheckBox Content="Validación fiscal automática e inmediata de CTG en pesada de egreso" 
+                                      IsChecked="{Binding IntegracionAfipCtg}" 
+                                      FontWeight="SemiBold" FontSize="12" Margin="0,4,0,12" />
+
+                            <Button Content="⚖️ Probar Captura de Peso en Báscula" 
+                                    Style="{StaticResource BtnSecondary}" 
+                                    HorizontalAlignment="Left" 
+                                    Command="{Binding ProbarBalanzaCommand}" 
+                                    Margin="0,0,0,8" />
+
+                            <!-- Feedback Balanza -->
+                            <Border Background="#ECFDF5" 
+                                    BorderBrush="#10B981" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,2,0,0"
+                                    Visibility="{Binding MensajePruebaBalanza, Converter={StaticResource StringToVisibilityConverter}}">
+                                <TextBlock Text="{Binding MensajePruebaBalanza}" FontSize="11" FontWeight="SemiBold" Foreground="#047857" TextWrapping="Wrap" />
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 2. Acopio & Control de Silos -->
+                    <Border Style="{StaticResource CardPanel}" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="🏭 Parámetros de Acopio &amp; Conservación en Silos" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" Margin="0,0,0,10" />
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Temperatura Crítica Alarma Silo (°C):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding UmbralTemperaturaSiloC, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Frecuencia Muestreo Termocuplas (min):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding IntervaloMuestreoSiloMin, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+                            </Grid>
+
+                            <CheckBox Content="Disparar aireación forzada automática al superar temperatura crítica" 
+                                      IsChecked="{Binding AireacionAutomatica}" 
+                                      FontWeight="SemiBold" FontSize="12" Margin="0,2,0,12" />
+
+                            <Border Height="1" Background="{StaticResource BrushBorderLight}" Margin="0,2,0,10" />
+
+                            <TextBlock Text="Humedad Máxima Base de Recibo Comercial (Sin Merma):" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushTextLight}" Margin="0,0,0,8" />
+
+                            <UniformGrid Columns="3">
+                                <StackPanel Margin="0,0,6,0">
+                                    <TextBlock Text="Soja Máx (%):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding UmbralHumedadSoja, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+                                <StackPanel Margin="3,0,3,0">
+                                    <TextBlock Text="Maíz Máx (%):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding UmbralHumedadMaiz, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+                                <StackPanel Margin="6,0,0,0">
+                                    <TextBlock Text="Trigo Máx (%):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding UmbralHumedadTrigo, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+                            </UniformGrid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 3. Flota, Telemetría GPS & Geocercas -->
                     <Border Style="{StaticResource CardPanel}">
                         <StackPanel>
-                            <TextBlock Text="Parámetros de Integración y Conectividad" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" Margin="0,0,0,12" />
+                            <TextBlock Text="🚛 Telemetría GPS, Flota &amp; Geocercas Operativas" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" Margin="0,0,0,10" />
 
-                            <TextBlock Text="Endpoint del Servidor Central API (REST):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
-                            <TextBox Text="{Binding ServidorApiEndpoint, UpdateSourceTrigger=PropertyChanged}" Height="36" Margin="0,0,0,12" />
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
 
-                            <Grid Margin="0,0,0,12">
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Proveedor de Rastreo IoT / Satelital:" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <ComboBox ItemsSource="{Binding ListaProveedoresGps}" SelectedItem="{Binding ProveedorGps}" Height="34" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Intervalo de Posicionamiento (seg):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding IntervaloReporteGpsSegundos, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Radio de Geocerca en Lote/Planta (m):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding RadioGeocercaMetros, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Tolerancia Desvío de Corredor (km):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding AlertaDesvioRutaKm, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+                            </Grid>
+
+                            <CheckBox Content="Emitir alerta si el camión se detiene fuera de ruta autorizada por >10 min" 
+                                      IsChecked="{Binding AlertaParadaNoAutorizada}" 
+                                      FontWeight="SemiBold" FontSize="12" Margin="0,2,0,4" />
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+
+                <!-- Columna Derecha: Satélite, Notificaciones, Servidor y Usuarios -->
+                <StackPanel Grid.Column="2">
+
+                    <!-- 4. Monitoreo Satelital & NDVI -->
+                    <Border Style="{StaticResource CardPanel}" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="🛰️ Teledetección Satelital &amp; Capas NDVI" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" Margin="0,0,0,10" />
+
+                            <TextBlock Text="Constelación Satelital Asignada:" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                            <ComboBox ItemsSource="{Binding ListaConstelaciones}" SelectedItem="{Binding ConstelacionSatelital}" Height="34" Margin="0,0,0,10" />
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Frecuencia Ingesta NDVI (días):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding FrecuenciaActualizacionNdviDias, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Umbral Alerta Estrés (NDVI &lt;):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding UmbralAlertaEstresNdvi, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+                            </Grid>
+
+                            <CheckBox Content="Corrección reflectancia Bottom-of-Atmosphere (BOA) automática" 
+                                      IsChecked="{Binding CorreccionAtmosfericaBoa}" 
+                                      FontWeight="SemiBold" FontSize="12" Margin="0,2,0,4" />
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 5. Canales de Notificación y Alertas Operativas -->
+                    <Border Style="{StaticResource CardPanel}" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="📲 Centro de Notificaciones y Canales Operativos" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" Margin="0,0,0,10" />
+
+                            <CheckBox Content="Envío de órdenes de carga y cartas de porte por WhatsApp a choferes" 
+                                      IsChecked="{Binding NotificarWhatsappChoferes}" 
+                                      FontWeight="SemiBold" FontSize="12" Margin="0,0,0,8" />
+
+                            <CheckBox Content="Notificación por SMS al productor con ticket de tara, bruto y neto" 
+                                      IsChecked="{Binding NotificarSmsPesadas}" 
+                                      FontWeight="SemiBold" FontSize="12" Margin="0,0,0,8" />
+
+                            <CheckBox Content="Resumen ejecutivo diario por Email a Gerencia (07:00 hs)" 
+                                      IsChecked="{Binding NotificarEmailGerencia}" 
+                                      FontWeight="SemiBold" FontSize="12" Margin="0,0,0,8" />
+
+                            <CheckBox Content="Alarma sonora y baliza en consola para eventos críticos de campo" 
+                                      IsChecked="{Binding AlertaSonoraCentroControl}" 
+                                      FontWeight="SemiBold" FontSize="12" Margin="0,0,0,12" />
+
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Email Operaciones / Gerencia:" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding EmailDestinoGerencia, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Línea WhatsApp Oficial:" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding TelefonoWhatsappAlertas, UpdateSourceTrigger=PropertyChanged}" Height="34" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 6. Conectividad Cloud & API REST -->
+                    <Border Style="{StaticResource CardPanel}" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="🌐 Servidor Cloud &amp; Enlace API REST" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" Margin="0,0,0,10" />
+
+                            <TextBlock Text="Endpoint Servidor Central SiTech:" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                            <TextBox Text="{Binding ServidorApiEndpoint, UpdateSourceTrigger=PropertyChanged}" Height="34" Margin="0,0,0,10" />
+
+                            <Grid Margin="0,0,0,10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0" Margin="0,0,10,0">
-                                    <TextBlock Text="Frecuencia Telemetría Satelital (minutos):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
-                                    <TextBox Text="{Binding IntervaloTelemetriaMinutos, UpdateSourceTrigger=PropertyChanged}" Height="36" />
+                                    <TextBlock Text="Frecuencia Telemetría (min):" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,4" />
+                                    <TextBox Text="{Binding IntervaloTelemetriaMinutos, UpdateSourceTrigger=PropertyChanged}" Height="34" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
-                                    <CheckBox Content="Sincronización en la Nube Activa" IsChecked="{Binding SincronizacionNubeActiva}" FontWeight="SemiBold" FontSize="12" VerticalAlignment="Center" Margin="0,0,0,8" />
+                                    <CheckBox Content="Sincronización Nube Activa" IsChecked="{Binding SincronizacionNubeActiva}" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,8" />
                                 </StackPanel>
                             </Grid>
 
@@ -65,33 +356,30 @@
                                     BorderThickness="1" 
                                     CornerRadius="6" 
                                     Padding="10" 
-                                    Margin="0,4,0,0"
-                                    Visibility="{Binding MensajePruebaConexion, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    Margin="0,2,0,0"
+                                    Visibility="{Binding MensajePruebaConexion, Converter={StaticResource StringToVisibilityConverter}}">
                                 <TextBlock Text="{Binding MensajePruebaConexion}" FontSize="11" FontWeight="SemiBold" Foreground="#047857" TextWrapping="Wrap" />
                             </Border>
                         </StackPanel>
                     </Border>
 
-                    <!-- Padrón de Usuarios del Sistema -->
+                    <!-- 7. Padrón de Usuarios del Sistema -->
                     <Border Style="{StaticResource CardPanel}">
                         <StackPanel>
-                            <TextBlock Text="Usuarios y Perfiles de Acceso" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" Margin="0,0,0,12" />
+                            <TextBlock Text="👥 Usuarios del Sistema y Roles Autorizados" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushTextMain}" Margin="0,0,0,10" />
 
-                            <DataGrid ItemsSource="{Binding UsuariosSistema}" Height="210">
+                            <DataGrid ItemsSource="{Binding UsuariosSistema}" Height="180">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Usuario" Binding="{Binding Username}" Width="100" FontWeight="SemiBold" />
+                                    <DataGridTextColumn Header="Usuario" Binding="{Binding Username}" Width="90" FontWeight="SemiBold" />
                                     <DataGridTextColumn Header="Nombre Completo" Binding="{Binding NombreCompleto}" Width="*" />
-                                    <DataGridTextColumn Header="Rol / Permiso" Binding="{Binding Rol}" Width="180" />
-                                    <DataGridTextColumn Header="Último Acceso" Binding="{Binding UltimoAcceso, StringFormat='{}{0:dd/MM HH:mm}'}" Width="110" />
+                                    <DataGridTextColumn Header="Rol / Permiso" Binding="{Binding Rol}" Width="160" />
+                                    <DataGridTextColumn Header="Último Acceso" Binding="{Binding UltimoAcceso, StringFormat='{}{0:dd/MM HH:mm}'}" Width="105" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
                     </Border>
 
                 </StackPanel>
-
-                <!-- Columna Derecha: Equipo de Ingeniería SiTech -->
-                <StackPanel Grid.Column="2"/>
             </Grid>
 
         </StackPanel>

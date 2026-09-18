@@ -81,7 +81,7 @@
                         CornerRadius="6" 
                         Padding="10" 
                         Margin="0,0,0,12"
-                        Visibility="{Binding MensajeExportacion, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        Visibility="{Binding MensajeExportacion, Converter={StaticResource StringToVisibilityConverter}}">
                     <TextBlock Text="{Binding MensajeExportacion}" FontWeight="SemiBold" Foreground="#047857" FontSize="12" />
                 </Border>
 

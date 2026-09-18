@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SiTech.AgroLogistica.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49629c7c5a5480a682f36b4b766cc4e30ed369fe")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f846229668145218be8f4eb0f0917112769755b3")]
 [assembly: System.Reflection.AssemblyProductAttribute("SiTech.AgroLogistica.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SiTech.AgroLogistica.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

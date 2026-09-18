@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\Desktop\\TFI Admin\\tests\\SiTech.AgroLogistica.Tests\\SiTech.AgroLogistica.Tests.csproj": {}
+    "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\tests\\SiTech.AgroLogistica.Tests\\SiTech.AgroLogistica.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\Desktop\\TFI Admin\\SiTech.AgroLogistica.csproj": {
+    "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\SiTech.AgroLogistica.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\SiTech.AgroLogistica.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\SiTech.AgroLogistica.csproj",
         "projectName": "SiTech.AgroLogistica",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\SiTech.AgroLogistica.csproj",
+        "projectPath": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\SiTech.AgroLogistica.csproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\obj\\",
+        "outputPath": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -72,14 +72,14 @@
         }
       }
     },
-    "C:\\Users\\Usuario\\Desktop\\TFI Admin\\tests\\SiTech.AgroLogistica.Tests\\SiTech.AgroLogistica.Tests.csproj": {
+    "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\tests\\SiTech.AgroLogistica.Tests\\SiTech.AgroLogistica.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\tests\\SiTech.AgroLogistica.Tests\\SiTech.AgroLogistica.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\tests\\SiTech.AgroLogistica.Tests\\SiTech.AgroLogistica.Tests.csproj",
         "projectName": "SiTech.AgroLogistica.Tests",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\tests\\SiTech.AgroLogistica.Tests\\SiTech.AgroLogistica.Tests.csproj",
+        "projectPath": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\tests\\SiTech.AgroLogistica.Tests\\SiTech.AgroLogistica.Tests.csproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\tests\\SiTech.AgroLogistica.Tests\\obj\\",
+        "outputPath": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\tests\\SiTech.AgroLogistica.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -100,8 +100,8 @@
           "net9.0-windows7.0": {
             "targetAlias": "net9.0-windows",
             "projectReferences": {
-              "C:\\Users\\Usuario\\Desktop\\TFI Admin\\SiTech.AgroLogistica.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\SiTech.AgroLogistica.csproj"
+              "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\SiTech.AgroLogistica.csproj": {
+                "projectPath": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\SiTech.AgroLogistica.csproj"
               }
             }
           }

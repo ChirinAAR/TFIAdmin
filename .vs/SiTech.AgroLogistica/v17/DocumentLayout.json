@@ -1,77 +1,37 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\",
+  "WorkspaceRootPath": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\configuracionview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\configuracionview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\trazabilidadview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\trazabilidadview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\transporteview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\transporteview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\cosechaview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\cosechaview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\cultivosview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\cultivosview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\dashboardview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\dashboardview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\dashboardview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\dashboardview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\empleadosview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\empleadosview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\reportesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\reportesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\reportesview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\reportesview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\documents\\facultad\\4to\\administracion de sistemas\\tfi\\tfi admin\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\climaalertasview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\documents\\facultad\\4to\\administracion de sistemas\\tfi\\tfi admin\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\documents\\facultad\\4to\\administracion de sistemas\\tfi\\tfi admin\\views\\climaalertasview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\climaalertasview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\clientesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\documents\\facultad\\4to\\administracion de sistemas\\tfi\\tfi admin\\views\\clientesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\clientesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\campanasview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\documents\\facultad\\4to\\administracion de sistemas\\tfi\\tfi admin\\views\\campanasview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\campanasview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\acopioview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\documents\\facultad\\4to\\administracion de sistemas\\tfi\\tfi admin\\views\\acopioview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\acopioview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\views\\loginview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\documents\\facultad\\4to\\administracion de sistemas\\tfi\\tfi admin\\views\\loginview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:views\\loginview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\desktop\\tfi admin\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|c:\\users\\usuario\\documents\\facultad\\4to\\administracion de sistemas\\tfi\\tfi admin\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{DB45E683-C765-46BA-889F-37A98F6A8416}|SiTech.AgroLogistica.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
@@ -82,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -90,203 +50,91 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TrazabilidadView.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\TrazabilidadView.xaml",
-              "RelativeDocumentMoniker": "Views\\TrazabilidadView.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\TrazabilidadView.xaml",
-              "RelativeToolTip": "Views\\TrazabilidadView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-13T23:48:30.42Z",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\MainWindow.xaml.cs",
+              "RelativeToolTip": "MainWindow.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-13T23:40:42.847Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "TransporteView.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\TransporteView.xaml",
-              "RelativeDocumentMoniker": "Views\\TransporteView.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\TransporteView.xaml",
-              "RelativeToolTip": "Views\\TransporteView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-13T23:48:10.536Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ConfiguracionView.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\ConfiguracionView.xaml",
-              "RelativeDocumentMoniker": "Views\\ConfiguracionView.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\ConfiguracionView.xaml",
-              "RelativeToolTip": "Views\\ConfiguracionView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-13T23:43:54.873Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CosechaView.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\CosechaView.xaml",
-              "RelativeDocumentMoniker": "Views\\CosechaView.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\CosechaView.xaml",
-              "RelativeToolTip": "Views\\CosechaView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-13T23:43:34.583Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "CultivosView.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\CultivosView.xaml",
-              "RelativeDocumentMoniker": "Views\\CultivosView.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\CultivosView.xaml",
-              "RelativeToolTip": "Views\\CultivosView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-13T23:43:14.67Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "DashboardView.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\DashboardView.xaml.cs",
-              "RelativeDocumentMoniker": "Views\\DashboardView.xaml.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\DashboardView.xaml.cs",
-              "RelativeToolTip": "Views\\DashboardView.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-13T23:43:02.442Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "DashboardView.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\DashboardView.xaml",
-              "RelativeDocumentMoniker": "Views\\DashboardView.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\DashboardView.xaml",
-              "RelativeToolTip": "Views\\DashboardView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-13T23:42:24.623Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "EmpleadosView.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\EmpleadosView.xaml",
-              "RelativeDocumentMoniker": "Views\\EmpleadosView.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\EmpleadosView.xaml",
-              "RelativeToolTip": "Views\\EmpleadosView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-13T23:41:50.48Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ReportesView.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\ReportesView.xaml.cs",
-              "RelativeDocumentMoniker": "Views\\ReportesView.xaml.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\ReportesView.xaml.cs",
-              "RelativeToolTip": "Views\\ReportesView.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-13T23:41:22.553Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ReportesView.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\ReportesView.xaml",
-              "RelativeDocumentMoniker": "Views\\ReportesView.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\ReportesView.xaml",
-              "RelativeToolTip": "Views\\ReportesView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-13T23:41:08.617Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\MainWindow.xaml.cs",
-              "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-13T23:40:42.847Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
               "Title": "ClimaAlertasView.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\ClimaAlertasView.xaml",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\Views\\ClimaAlertasView.xaml",
               "RelativeDocumentMoniker": "Views\\ClimaAlertasView.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\ClimaAlertasView.xaml",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\Views\\ClimaAlertasView.xaml",
               "RelativeToolTip": "Views\\ClimaAlertasView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-09-13T23:40:25.275Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 3,
               "Title": "ClientesView.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\ClientesView.xaml",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\Views\\ClientesView.xaml",
               "RelativeDocumentMoniker": "Views\\ClientesView.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\ClientesView.xaml",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\Views\\ClientesView.xaml",
               "RelativeToolTip": "Views\\ClientesView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-09-13T23:39:46.072Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 4,
               "Title": "CampanasView.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\CampanasView.xaml",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\Views\\CampanasView.xaml",
               "RelativeDocumentMoniker": "Views\\CampanasView.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\CampanasView.xaml",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\Views\\CampanasView.xaml",
               "RelativeToolTip": "Views\\CampanasView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-09-13T23:38:50.037Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 5,
               "Title": "AcopioView.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\AcopioView.xaml",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\Views\\AcopioView.xaml",
               "RelativeDocumentMoniker": "Views\\AcopioView.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\AcopioView.xaml",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\Views\\AcopioView.xaml",
               "RelativeToolTip": "Views\\AcopioView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-09-13T23:38:36.38Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 6,
               "Title": "LoginView.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\LoginView.xaml",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\Views\\LoginView.xaml",
               "RelativeDocumentMoniker": "Views\\LoginView.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\Views\\LoginView.xaml",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\Views\\LoginView.xaml",
               "RelativeToolTip": "Views\\LoginView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-09-13T23:38:09.493Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 1,
               "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\MainWindow.xaml",
               "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-09-13T23:37:47.257Z"
+              "WhenOpened": "2026-09-13T23:37:47.257Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 7,
               "Title": "App.xaml",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\App.xaml",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\App.xaml",
               "RelativeDocumentMoniker": "App.xaml",
-              "ToolTip": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\App.xaml",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\App.xaml",
               "RelativeToolTip": "App.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-09-13T01:38:06.526Z",

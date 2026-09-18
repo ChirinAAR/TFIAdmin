@@ -26,7 +26,6 @@ namespace SiTech.AgroLogistica.ViewModels
         private TransporteViewModel? _transporteVM;
         private AcopioViewModel? _acopioVM;
         private ClimaAlertasViewModel? _climaVM;
-        private TrazabilidadViewModel? _trazabilidadVM;
         private ClientesViewModel? _clientesVM;
         private CampanasViewModel? _campanasVM;
         private EmpleadosViewModel? _empleadosVM;
@@ -93,7 +92,6 @@ namespace SiTech.AgroLogistica.ViewModels
             _transporteVM = new TransporteViewModel(_agroService);
             _acopioVM = new AcopioViewModel(_agroService);
             _climaVM = new ClimaAlertasViewModel(_agroService);
-            _trazabilidadVM = new TrazabilidadViewModel(_agroService);
             _clientesVM = new ClientesViewModel(_agroService);
             _campanasVM = new CampanasViewModel(_agroService);
             _empleadosVM = new EmpleadosViewModel(_agroService);
@@ -145,10 +143,6 @@ namespace SiTech.AgroLogistica.ViewModels
                 case "Clima":
                     _climaVM?.CargarDatos();
                     CurrentViewModel = _climaVM;
-                    break;
-                case "Trazabilidad":
-                    _trazabilidadVM?.CargarPartidas();
-                    CurrentViewModel = _trazabilidadVM;
                     break;
                 case "Clientes":
                     _clientesVM?.CargarClientes();

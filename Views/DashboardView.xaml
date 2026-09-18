@@ -6,6 +6,33 @@
              mc:Ignorable="d" 
              d:DesignHeight="850" d:DesignWidth="1200">
 
+    <UserControl.Resources>
+        <Style x:Key="BtnPillFiltro" TargetType="Button">
+            <Setter Property="Background" Value="#F1F5F9" />
+            <Setter Property="Foreground" Value="#475569" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="10,4" />
+            <Setter Property="Margin" Value="0,0,6,0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#CBD5E1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="12" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="24,20,24,24">
 
@@ -68,12 +95,12 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <!-- Fila Principal: Logística en Tiempo Real y Alertas Críticas -->
+            <!-- Fila Principal: Logística en Tiempo Real y Alertas Operativas Multidisciplinarias -->
             <Grid Margin="0,10,0,14">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.7*" />
-                    <ColumnDefinition Width="14" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="1.1*" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="1.2*" />
                 </Grid.ColumnDefinitions>
 
                 <!-- Columna Izquierda: Camiones y Logística en Tránsito -->
@@ -85,10 +112,11 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0">
-                                <TextBlock 
-                                           FontSize="16" 
+                                <TextBlock FontSize="16" 
                                            FontWeight="Bold" 
-                                           Foreground="{StaticResource BrushTextMain}" ><Run Text="🚛 "/><Run Language="es-ar" Text="Seguimiento Transporte"/></TextBlock>
+                                           Foreground="{StaticResource BrushTextMain}">
+                                    <Run Text="🚛 Seguimiento Transporte &amp; Flota"/>
+                                </TextBlock>
                             </StackPanel>
                             <Button Grid.Column="1" 
                                     Content="Ver Todo el Transporte" 
@@ -167,95 +195,277 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Columna Derecha: Alertas Agroclimáticas y Acciones Rápidas -->
-                <StackPanel Grid.Column="2">
-                    <!-- Alertas -->
-                    <Border Style="{StaticResource CardPanel}">
-                        <StackPanel>
-                            <Grid Margin="0,0,0,12">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" 
-                                           Text="⚠️ Alertas Vigentes" 
-                                           FontSize="15" 
+                <!-- Columna Derecha: Centro de Alertas Operativas Multidisciplinarias -->
+                <Border Grid.Column="2" Style="{StaticResource CardPanel}">
+                    <StackPanel>
+                        <!-- Header de Alertas -->
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="⚠️ Alertas Operativas Activas" 
+                                           FontSize="16" 
                                            FontWeight="Bold" 
                                            Foreground="{StaticResource BrushTextMain}" />
-                                <Button Grid.Column="1" 
-                                        Content="Centro Clima" 
-                                        Style="{StaticResource BtnSecondary}" 
-                                        Command="{Binding NavegarCommand}" 
-                                        CommandParameter="Clima" 
-                                        FontSize="11" />
-                            </Grid>
+                                <Border Background="#DC2626" CornerRadius="10" Padding="8,2" Margin="10,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding TotalAlertasActivas, StringFormat='{}{0} Activas'}" 
+                                               Foreground="White" 
+                                               FontSize="11" 
+                                               FontWeight="Bold" />
+                                </Border>
+                            </StackPanel>
+                            <Button Grid.Column="1" 
+                                    Content="🔄 Actualizar Alertas" 
+                                    Style="{StaticResource BtnSecondary}" 
+                                    Command="{Binding ActualizarCommand}" 
+                                    FontSize="11" />
+                        </Grid>
 
-                            <ItemsControl ItemsSource="{Binding AlertasUrgentes}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border BorderBrush="{StaticResource BrushDanger}" 
-                                                BorderThickness="1,0,0,0" 
-                                                Background="#FEF2F2" 
-                                                CornerRadius="0,6,6,0" 
-                                                Padding="10" 
-                                                Margin="0,0,0,10">
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding Titulo}" FontWeight="Bold" FontSize="12" Foreground="{StaticResource BrushDanger}" TextWrapping="Wrap" />
-                                                <TextBlock Text="{Binding ZonaAfectada, StringFormat='Zona: {0}'}" FontSize="11" FontWeight="SemiBold" Margin="0,2,0,0" />
-                                                <TextBlock Text="{Binding RecomendacionOperativa}" FontSize="11" Foreground="{StaticResource BrushTextMuted}" Margin="0,4,0,0" TextWrapping="Wrap" />
+                        <!-- Filtros por Área Operativa (Pills) -->
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,14">
+                            <StackPanel Orientation="Horizontal">
+                                <!-- Todas -->
+                                <Button Content="Todas" Command="{Binding FiltrarAreaCommand}" CommandParameter="Todas">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource BtnPillFiltro}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding FiltroArea}" Value="Todas">
+                                                    <Setter Property="Background" Value="#1B5E20" />
+                                                    <Setter Property="Foreground" Value="White" />
+                                                    <Setter Property="BorderBrush" Value="#1B5E20" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <!-- Cultivos -->
+                                <Button Content="🌱 Cultivos" Command="{Binding FiltrarAreaCommand}" CommandParameter="Cultivos">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource BtnPillFiltro}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding FiltroArea}" Value="Cultivos">
+                                                    <Setter Property="Background" Value="#1B5E20" />
+                                                    <Setter Property="Foreground" Value="White" />
+                                                    <Setter Property="BorderBrush" Value="#1B5E20" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <!-- Cosecha -->
+                                <Button Content="🚜 Cosecha" Command="{Binding FiltrarAreaCommand}" CommandParameter="Cosecha">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource BtnPillFiltro}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding FiltroArea}" Value="Cosecha">
+                                                    <Setter Property="Background" Value="#1B5E20" />
+                                                    <Setter Property="Foreground" Value="White" />
+                                                    <Setter Property="BorderBrush" Value="#1B5E20" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <!-- Transporte -->
+                                <Button Content="🚚 Transporte" Command="{Binding FiltrarAreaCommand}" CommandParameter="Transporte">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource BtnPillFiltro}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding FiltroArea}" Value="Transporte">
+                                                    <Setter Property="Background" Value="#1B5E20" />
+                                                    <Setter Property="Foreground" Value="White" />
+                                                    <Setter Property="BorderBrush" Value="#1B5E20" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <!-- Acopio -->
+                                <Button Content="🏭 Acopio" Command="{Binding FiltrarAreaCommand}" CommandParameter="Acopio">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource BtnPillFiltro}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding FiltroArea}" Value="Acopio">
+                                                    <Setter Property="Background" Value="#1B5E20" />
+                                                    <Setter Property="Foreground" Value="White" />
+                                                    <Setter Property="BorderBrush" Value="#1B5E20" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <!-- Clima -->
+                                <Button Content="🌤️ Clima" Command="{Binding FiltrarAreaCommand}" CommandParameter="Clima">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource BtnPillFiltro}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding FiltroArea}" Value="Clima">
+                                                    <Setter Property="Background" Value="#1B5E20" />
+                                                    <Setter Property="Foreground" Value="White" />
+                                                    <Setter Property="BorderBrush" Value="#1B5E20" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                        <!-- Mensaje si no hay alertas -->
+                        <Border Background="#F8FAFC" 
+                                BorderBrush="{StaticResource BrushBorderLight}" 
+                                BorderThickness="1" 
+                                CornerRadius="8" 
+                                Padding="20" 
+                                Margin="0,4,0,0">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding AlertasUrgentes.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="✅ Sin Alertas Activas en esta Área" FontWeight="Bold" FontSize="13" Foreground="{StaticResource BrushPrimary}" HorizontalAlignment="Center" />
+                                <TextBlock Text="Todas las variables y operaciones se encuentran dentro de los parámetros estándar establecidos." FontSize="11" Foreground="{StaticResource BrushTextMuted}" Margin="0,4,0,0" HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Lista de Alertas Multidisciplinarias -->
+                        <ItemsControl ItemsSource="{Binding AlertasUrgentes}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="{Binding ColorSeveridadBorde}" 
+                                            BorderThickness="1" 
+                                            Background="{Binding ColorSeveridadFondo}" 
+                                            CornerRadius="8" 
+                                            Padding="12" 
+                                            Margin="0,0,0,10">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <!-- Fila 0: Badges (Módulo, Tiempo y Severidad) -->
+                                            <Grid Grid.Row="0" Margin="0,0,0,8">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <!-- Badge de Área / Módulo -->
+                                                <Border Grid.Column="0" 
+                                                        Background="{Binding FondoBadgeModulo}" 
+                                                        CornerRadius="4" 
+                                                        Padding="8,2" 
+                                                        VerticalAlignment="Center">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding IconoModulo}" FontSize="11" Margin="0,0,4,0" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding ModuloOrigen}" FontSize="11" FontWeight="Bold" Foreground="{Binding ColorBadgeModulo}" VerticalAlignment="Center" />
+                                                    </StackPanel>
+                                                </Border>
+
+                                                <!-- Tiempo transcurrido -->
+                                                <TextBlock Grid.Column="1" 
+                                                           Text="{Binding TiempoTranscurrido}" 
+                                                           FontSize="11" 
+                                                           Foreground="{StaticResource BrushTextMuted}" 
+                                                           Margin="10,0,0,0" 
+                                                           VerticalAlignment="Center" />
+
+                                                <!-- Badge de Severidad -->
+                                                <Border Grid.Column="2" 
+                                                        Background="{Binding ColorSeveridad}" 
+                                                        CornerRadius="10" 
+                                                        Padding="8,2" 
+                                                        VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding NivelSeveridad}" 
+                                                               FontSize="10" 
+                                                               FontWeight="Bold" 
+                                                               Foreground="White" />
+                                                </Border>
+                                            </Grid>
+
+                                            <!-- Fila 1: Título de la Alerta -->
+                                            <TextBlock Grid.Row="1" 
+                                                       Text="{Binding Titulo}" 
+                                                       FontWeight="Bold" 
+                                                       FontSize="13" 
+                                                       Foreground="{StaticResource BrushTextMain}" 
+                                                       TextWrapping="Wrap" 
+                                                       Margin="0,0,0,4" />
+
+                                            <!-- Fila 2: Ubicación / Zona Afectada -->
+                                            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,6">
+                                                <TextBlock Text="📍 " FontSize="11" />
+                                                <TextBlock Text="{Binding ZonaAfectada}" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource BrushTextMuted}" />
                                             </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </StackPanel>
-                    </Border>
 
-                    <!-- Accesos Rápidos a Módulos -->
-                    <Border Style="{StaticResource CardPanel}">
-                        <StackPanel>
-                            <TextBlock Text="⚡ Acceso Rápido" 
-                                       FontSize="15" 
-                                       FontWeight="Bold" 
-                                       Foreground="{StaticResource BrushTextMain}" 
-                                       Margin="0,0,0,10" />
+                                            <!-- Fila 3: Descripción detallada -->
+                                            <TextBlock Grid.Row="3" 
+                                                       Text="{Binding Descripcion}" 
+                                                       FontSize="11" 
+                                                       Foreground="{StaticResource BrushTextMuted}" 
+                                                       TextWrapping="Wrap" 
+                                                       Margin="0,0,0,8" />
 
-                            <Button Content="🌱 Monitoreo de Cultivos y Lotes" 
-                                    Style="{StaticResource BtnSecondary}" 
-                                    HorizontalContentAlignment="Left"
-                                    Margin="0,0,0,8" 
-                                    Command="{Binding NavegarCommand}" 
-                                    CommandParameter="Cultivos" />
+                                            <!-- Fila 4: Recomendación Operativa & Botón de Acción -->
+                                            <Border Grid.Row="4" 
+                                                    Background="White" 
+                                                    BorderBrush="{Binding ColorSeveridadBorde}" 
+                                                    BorderThickness="1" 
+                                                    CornerRadius="6" 
+                                                    Padding="10,8">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
 
-                            <Button Content="🚜 Registrar Avance de Cosecha" 
-                                    Style="{StaticResource BtnSecondary}" 
-                                    HorizontalContentAlignment="Left"
-                                    Margin="0,0,0,8" 
-                                    Command="{Binding NavegarCommand}" 
-                                    CommandParameter="Cosecha" />
+                                                    <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                        <TextBlock Text="💡 RECOMENDACIÓN OPERATIVA" FontSize="10" FontWeight="Bold" Foreground="{Binding ColorSeveridad}" />
+                                                        <TextBlock Text="{Binding RecomendacionOperativa}" FontSize="11" Foreground="{StaticResource BrushTextMain}" TextWrapping="Wrap" Margin="0,2,0,0" />
+                                                    </StackPanel>
 
-                            <Button Content="🏭 Control de Silos y Stock" 
-                                    Style="{StaticResource BtnSecondary}" 
-                                    HorizontalContentAlignment="Left"
-                                    Margin="0,0,0,8" 
-                                    Command="{Binding NavegarCommand}" 
-                                    CommandParameter="Acopio" />
-
-                            <Button Content="🔍 Rastreo y Trazabilidad Digital" 
-                                    Style="{StaticResource BtnSecondary}" 
-                                    HorizontalContentAlignment="Left"
-                                    Margin="0,0,0,8" 
-                                    Command="{Binding NavegarCommand}" 
-                                    CommandParameter="Trazabilidad" />
-
-                            <Button Content="📊 Generar Reportes" 
-                                    Style="{StaticResource BtnPrimary}" 
-                                    HorizontalContentAlignment="Left"
-                                    Command="{Binding NavegarCommand}" 
-                                    CommandParameter="Reportes" />
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
+                                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                                        <Button Content="Atender en Módulo →" 
+                                                                Style="{StaticResource BtnSecondary}" 
+                                                                FontSize="11" 
+                                                                Padding="8,4" 
+                                                                Margin="0,0,6,0"
+                                                                Command="{Binding DataContext.NavegarAModuloAlertaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                                                CommandParameter="{Binding}" />
+                                                        <Button Content="✓ Resolver" 
+                                                                Style="{StaticResource BtnPrimary}" 
+                                                                FontSize="11" 
+                                                                Padding="8,4" 
+                                                                Command="{Binding DataContext.ResolverAlertaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                                                CommandParameter="{Binding}" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
             </Grid>
 
         </StackPanel>

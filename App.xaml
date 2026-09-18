@@ -14,6 +14,7 @@
 
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <common:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+            <common:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
 
             <!-- Mapeo Automático de ViewModels a Vistas -->
             <DataTemplate DataType="{x:Type vm:LoginViewModel}">

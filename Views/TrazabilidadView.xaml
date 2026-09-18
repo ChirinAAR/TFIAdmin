@@ -124,7 +124,7 @@
                                 BorderThickness="1" 
                                 CornerRadius="6" 
                                 Padding="10"
-                                Visibility="{Binding DataContext.MensajeCertificado, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                Visibility="{Binding DataContext.MensajeCertificado, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource StringToVisibilityConverter}}">
                             <TextBlock Text="{Binding DataContext.MensajeCertificado, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="11" Foreground="{StaticResource BrushBlue}" TextWrapping="Wrap" />
                         </Border>
                     </StackPanel>

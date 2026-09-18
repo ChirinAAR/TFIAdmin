@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BGCQFkUh0ds=",
+  "dgSpecHash": "toYsrqv1xS4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Usuario\\Desktop\\TFI Admin\\tests\\SiTech.AgroLogistica.Tests\\SiTech.AgroLogistica.Tests.csproj",
+  "projectFilePath": "C:\\Users\\Usuario\\Documents\\Facultad\\4to\\Administracion de Sistemas\\TFI\\TFI Admin\\tests\\SiTech.AgroLogistica.Tests\\SiTech.AgroLogistica.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.applicationinsights\\2.22.0\\microsoft.applicationinsights.2.22.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.codecoverage\\17.12.0\\microsoft.codecoverage.17.12.0.nupkg.sha512",

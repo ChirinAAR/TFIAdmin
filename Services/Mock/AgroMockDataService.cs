@@ -194,6 +194,7 @@ namespace SiTech.AgroLogistica.Services.Mock
             double stockTotal = _silos.Sum(s => s.StockActualTn);
             double ocupacionSilos = totalCapSilos > 0 ? (stockTotal / totalCapSilos) * 100.0 : 0;
             int alertasActivas = _alertas.Count(a => a.Activa);
+            int alertasCriticas = _alertas.Count(a => a.Activa && (a.NivelSeveridad == "Crítica" || a.NivelSeveridad == "Alta"));
 
             return new List<IndicadorKpi>
             {
@@ -235,12 +236,12 @@ namespace SiTech.AgroLogistica.Services.Mock
                 },
                 new IndicadorKpi
                 {
-                    Titulo = "ALERTAS AGROCLIMÁTICAS",
-                    Valor = $"{alertasActivas} Activas",
-                    Subtitulo = "Red de 4 estaciones zonales NOA",
-                    Tendencia = alertasActivas > 0 ? "1 Alerta meteorológica urgente" : "Condiciones estables",
+                    Titulo = "ALERTAS ACTIVAS DEL SISTEMA",
+                    Valor = $"{alertasActivas} Operativas",
+                    Subtitulo = "Cultivos, Acopio, Flota y Clima",
+                    Tendencia = alertasCriticas > 0 ? $"{alertasCriticas} de alta severidad prioritarias" : "Parámetros dentro de norma",
                     IconoKey = "IconAlert",
-                    ColorFondo = alertasActivas > 0 ? "#DC2626" : "#059669"
+                    ColorFondo = alertasCriticas > 0 ? "#DC2626" : "#059669"
                 }
             };
         }
@@ -618,13 +619,30 @@ namespace SiTech.AgroLogistica.Services.Mock
                     NombreEstacion = "Estación Tafí Viejo (Citrícola)",
                     Provincia = "Tucumán",
                     TemperaturaC = 23.8,
+                    SensacionTermicaC = 24.5,
                     HumedadRelativaPorcentaje = 66,
+                    PuntoRocioC = 17.1,
                     VientoVelocidadKmH = 12,
+                    RafagasKmH = 18,
                     VientoDireccion = "SE",
                     PrecipitacionUltimas24hMm = 4.2,
+                    LluviaAcumuladaMesMm = 72.4,
+                    EvapotranspiracionEtoMm = 3.8,
                     PresionHpa = 1013,
                     EstadoCielo = "Parcialmente Nublado",
-                    IndiceUV = "Moderado (5)"
+                    IndiceUV = "Moderado (5)",
+                    RadiacionSolarWm2 = 680,
+                    DeltaTC = 4.2,
+                    CondicionPulverizacion = "Ventana Óptima",
+                    DiagnosticoVentana = "Condiciones muy favorables para pulverización. Delta T en rango seguro (2-8°C), deriva baja.",
+                    PronosticoExtendido = new List<PronosticoDia>
+                    {
+                        new PronosticoDia { DiaSemana = "Hoy", FechaCorta = "18 Sep", TempMinC = 16, TempMaxC = 24, Condicion = "Parcial Nublado", Icono = "⛅", ProbabilidadLluviaPorcentaje = 15, VientoMaxKmH = 15, EstadoVentana = "Óptima" },
+                        new PronosticoDia { DiaSemana = "Viernes", FechaCorta = "19 Sep", TempMinC = 17, TempMaxC = 26, Condicion = "Soleado", Icono = "☀️", ProbabilidadLluviaPorcentaje = 5, VientoMaxKmH = 14, EstadoVentana = "Óptima" },
+                        new PronosticoDia { DiaSemana = "Sábado", FechaCorta = "20 Sep", TempMinC = 19, TempMaxC = 28, Condicion = "Cálido", Icono = "🌤️", ProbabilidadLluviaPorcentaje = 10, VientoMaxKmH = 18, EstadoVentana = "Precaución" },
+                        new PronosticoDia { DiaSemana = "Domingo", FechaCorta = "21 Sep", TempMinC = 18, TempMaxC = 25, Condicion = "Tormentas Aisladas", Icono = "⛈️", ProbabilidadLluviaPorcentaje = 65, VientoMaxKmH = 26, EstadoVentana = "No Recomendada" },
+                        new PronosticoDia { DiaSemana = "Lunes", FechaCorta = "22 Sep", TempMinC = 15, TempMaxC = 22, Condicion = "Lloviznas Leves", Icono = "🌦️", ProbabilidadLluviaPorcentaje = 40, VientoMaxKmH = 16, EstadoVentana = "No Recomendada" }
+                    }
                 },
                 new EstacionClimatica
                 {
@@ -632,13 +650,30 @@ namespace SiTech.AgroLogistica.Services.Mock
                     NombreEstacion = "Estación Leales (Llanura Granaria)",
                     Provincia = "Tucumán",
                     TemperaturaC = 26.5,
+                    SensacionTermicaC = 27.2,
                     HumedadRelativaPorcentaje = 58,
-                    VientoVelocidadKmH = 16,
+                    PuntoRocioC = 17.5,
+                    VientoVelocidadKmH = 15,
+                    RafagasKmH = 22,
                     VientoDireccion = "E",
                     PrecipitacionUltimas24hMm = 0.0,
+                    LluviaAcumuladaMesMm = 54.0,
+                    EvapotranspiracionEtoMm = 4.6,
                     PresionHpa = 1012,
                     EstadoCielo = "Soleado / Despejado",
-                    IndiceUV = "Alto (7)"
+                    IndiceUV = "Alto (7)",
+                    RadiacionSolarWm2 = 790,
+                    DeltaTC = 5.6,
+                    CondicionPulverizacion = "Ventana Óptima",
+                    DiagnosticoVentana = "Apta para tratamientos fitosanitarios hasta las 11:30 hs y posterior a las 16:30 hs.",
+                    PronosticoExtendido = new List<PronosticoDia>
+                    {
+                        new PronosticoDia { DiaSemana = "Hoy", FechaCorta = "18 Sep", TempMinC = 15, TempMaxC = 27, Condicion = "Despejado", Icono = "☀️", ProbabilidadLluviaPorcentaje = 0, VientoMaxKmH = 16, EstadoVentana = "Óptima" },
+                        new PronosticoDia { DiaSemana = "Viernes", FechaCorta = "19 Sep", TempMinC = 16, TempMaxC = 29, Condicion = "Soleado", Icono = "☀️", ProbabilidadLluviaPorcentaje = 5, VientoMaxKmH = 15, EstadoVentana = "Óptima" },
+                        new PronosticoDia { DiaSemana = "Sábado", FechaCorta = "20 Sep", TempMinC = 18, TempMaxC = 31, Condicion = "Viento Norte", Icono = "🌤️", ProbabilidadLluviaPorcentaje = 10, VientoMaxKmH = 22, EstadoVentana = "Precaución" },
+                        new PronosticoDia { DiaSemana = "Domingo", FechaCorta = "21 Sep", TempMinC = 19, TempMaxC = 26, Condicion = "Chubascos", Icono = "🌧️", ProbabilidadLluviaPorcentaje = 70, VientoMaxKmH = 28, EstadoVentana = "No Recomendada" },
+                        new PronosticoDia { DiaSemana = "Lunes", FechaCorta = "22 Sep", TempMinC = 14, TempMaxC = 23, Condicion = "Fresco / Nublado", Icono = "⛅", ProbabilidadLluviaPorcentaje = 20, VientoMaxKmH = 14, EstadoVentana = "Óptima" }
+                    }
                 },
                 new EstacionClimatica
                 {
@@ -646,13 +681,30 @@ namespace SiTech.AgroLogistica.Services.Mock
                     NombreEstacion = "Estación J.V. González (Anta)",
                     Provincia = "Salta",
                     TemperaturaC = 29.2,
+                    SensacionTermicaC = 29.8,
                     HumedadRelativaPorcentaje = 41,
+                    PuntoRocioC = 14.8,
                     VientoVelocidadKmH = 22,
+                    RafagasKmH = 34,
                     VientoDireccion = "N",
                     PrecipitacionUltimas24hMm = 0.0,
+                    LluviaAcumuladaMesMm = 38.0,
+                    EvapotranspiracionEtoMm = 5.8,
                     PresionHpa = 1010,
-                    EstadoCielo = "Despejado",
-                    IndiceUV = "Muy Alto (9)"
+                    EstadoCielo = "Despejado con Viento",
+                    IndiceUV = "Muy Alto (9)",
+                    RadiacionSolarWm2 = 880,
+                    DeltaTC = 8.6,
+                    CondicionPulverizacion = "Precaución / Límite",
+                    DiagnosticoVentana = "Delta T elevado (>8°C) y viento > 20 km/h. Riesgo de evaporación rápida de gotas y deriva moderada.",
+                    PronosticoExtendido = new List<PronosticoDia>
+                    {
+                        new PronosticoDia { DiaSemana = "Hoy", FechaCorta = "18 Sep", TempMinC = 18, TempMaxC = 30, Condicion = "Caluroso / Ventoso", Icono = "🌤️", ProbabilidadLluviaPorcentaje = 0, VientoMaxKmH = 24, EstadoVentana = "Precaución" },
+                        new PronosticoDia { DiaSemana = "Viernes", FechaCorta = "19 Sep", TempMinC = 19, TempMaxC = 33, Condicion = "Viento Zonda", Icono = "☀️", ProbabilidadLluviaPorcentaje = 0, VientoMaxKmH = 32, EstadoVentana = "No Recomendada" },
+                        new PronosticoDia { DiaSemana = "Sábado", FechaCorta = "20 Sep", TempMinC = 20, TempMaxC = 34, Condicion = "Muy Caluroso", Icono = "🔥", ProbabilidadLluviaPorcentaje = 5, VientoMaxKmH = 25, EstadoVentana = "Precaución" },
+                        new PronosticoDia { DiaSemana = "Domingo", FechaCorta = "21 Sep", TempMinC = 17, TempMaxC = 24, Condicion = "Frente Frío / Tormenta", Icono = "⛈️", ProbabilidadLluviaPorcentaje = 80, VientoMaxKmH = 38, EstadoVentana = "No Recomendada" },
+                        new PronosticoDia { DiaSemana = "Lunes", FechaCorta = "22 Sep", TempMinC = 13, TempMaxC = 22, Condicion = "Despejado", Icono = "☀️", ProbabilidadLluviaPorcentaje = 10, VientoMaxKmH = 12, EstadoVentana = "Óptima" }
+                    }
                 },
                 new EstacionClimatica
                 {
@@ -660,13 +712,30 @@ namespace SiTech.AgroLogistica.Services.Mock
                     NombreEstacion = "Estación Rosario de la Frontera",
                     Provincia = "Salta",
                     TemperaturaC = 24.6,
+                    SensacionTermicaC = 25.1,
                     HumedadRelativaPorcentaje = 52,
+                    PuntoRocioC = 14.2,
                     VientoVelocidadKmH = 10,
+                    RafagasKmH = 16,
                     VientoDireccion = "NE",
                     PrecipitacionUltimas24hMm = 1.0,
+                    LluviaAcumuladaMesMm = 46.5,
+                    EvapotranspiracionEtoMm = 4.0,
                     PresionHpa = 1014,
                     EstadoCielo = "Despejado",
-                    IndiceUV = "Moderado (6)"
+                    IndiceUV = "Moderado (6)",
+                    RadiacionSolarWm2 = 710,
+                    DeltaTC = 5.1,
+                    CondicionPulverizacion = "Ventana Óptima",
+                    DiagnosticoVentana = "Condiciones atmosféricas sumamente estables. Pulverizaciones y cosecha en ventanas normales.",
+                    PronosticoExtendido = new List<PronosticoDia>
+                    {
+                        new PronosticoDia { DiaSemana = "Hoy", FechaCorta = "18 Sep", TempMinC = 14, TempMaxC = 25, Condicion = "Despejado", Icono = "☀️", ProbabilidadLluviaPorcentaje = 0, VientoMaxKmH = 12, EstadoVentana = "Óptima" },
+                        new PronosticoDia { DiaSemana = "Viernes", FechaCorta = "19 Sep", TempMinC = 15, TempMaxC = 27, Condicion = "Soleado", Icono = "☀️", ProbabilidadLluviaPorcentaje = 0, VientoMaxKmH = 14, EstadoVentana = "Óptima" },
+                        new PronosticoDia { DiaSemana = "Sábado", FechaCorta = "20 Sep", TempMinC = 17, TempMaxC = 30, Condicion = "Nubosidad Variable", Icono = "⛅", ProbabilidadLluviaPorcentaje = 15, VientoMaxKmH = 16, EstadoVentana = "Óptima" },
+                        new PronosticoDia { DiaSemana = "Domingo", FechaCorta = "21 Sep", TempMinC = 16, TempMaxC = 23, Condicion = "Lluvias Aisladas", Icono = "🌧️", ProbabilidadLluviaPorcentaje = 60, VientoMaxKmH = 22, EstadoVentana = "No Recomendada" },
+                        new PronosticoDia { DiaSemana = "Lunes", FechaCorta = "22 Sep", TempMinC = 12, TempMaxC = 21, Condicion = "Fresco / Soleado", Icono = "☀️", ProbabilidadLluviaPorcentaje = 5, VientoMaxKmH = 10, EstadoVentana = "Óptima" }
+                    }
                 }
             };
         }
@@ -678,36 +747,91 @@ namespace SiTech.AgroLogistica.Services.Mock
                 new AlertaMeteorologica
                 {
                     Id = 1,
-                    Titulo = "Alerta Meteorológica: Tormentas Severas con Actividad Eléctrica",
-                    TipoAlerta = "Tormenta Fuerte",
+                    Titulo = "Alerta Meteorológica: Tormentas Severas y Probabilidad de Granizo",
+                    ModuloOrigen = "Clima",
+                    TipoAlerta = "Tormenta Severa",
                     NivelSeveridad = "Crítica",
                     ZonaAfectada = "Este de Tucumán (Cruz Alta, Leales, Burruyacú)",
-                    Descripcion = "Frente de tormenta con probabilidad de precipitaciones intensas (40-60 mm) y posible caída aislada de granizo en las próximas 6 horas.",
-                    RecomendacionOperativa = "Suspender labores de cosecha en tolvas abiertas. Resguardar maquinaria pesada y cubrir camiones cargados con lonas impermeables.",
-                    FechaEmision = DateTime.Now.AddHours(-1),
+                    Descripcion = "Frente convectivo severo con ráfagas superiores a 60 km/h y precipitaciones estimadas en 40-60 mm en las próximas 4 horas.",
+                    RecomendacionOperativa = "Cubrir inmediatamente tolvas y camiones con lona impermeable; suspender labores de trilla abierta.",
+                    FechaEmision = DateTime.Now.AddMinutes(-35),
                     Activa = true
                 },
                 new AlertaMeteorologica
                 {
                     Id = 2,
-                    Titulo = "Alerta Fitosanitaria: Presencia de Oruga Cogollera (Spodoptera)",
-                    TipoAlerta = "Plaga/Fitosanitaria",
-                    NivelSeveridad = "Media",
-                    ZonaAfectada = "Departamento Anta - Salta",
-                    Descripcion = "Se reporta captura de adultos en trampas de luz por encima del umbral de daño económico en lotes de maíz tardío.",
-                    RecomendacionOperativa = "Intensificar monitoreo de cogollos cada 48 hs y coordinar pulverizadora autopropulsada con insecticida selectivo.",
-                    FechaEmision = DateTime.Now.AddHours(-12),
+                    Titulo = "Alerta de Acopio: Incremento Térmico en Silo Chapa #02",
+                    ModuloOrigen = "Acopio",
+                    TipoAlerta = "Temperatura Grano",
+                    NivelSeveridad = "Crítica",
+                    ZonaAfectada = "Planta Este - Banda del Río Salí (Silo #02)",
+                    Descripcion = "Termometría registra 28.5 °C en estrato medio con humedad de 13.9% en masa de grano de maíz.",
+                    RecomendacionOperativa = "Activar inmediatamente turbinas de aireación forzada y ciclo de enfriamiento nocturno.",
+                    FechaEmision = DateTime.Now.AddHours(-1),
                     Activa = true
                 },
                 new AlertaMeteorologica
                 {
                     Id = 3,
-                    Titulo = "Aviso Preventivo: Viento Zonda en Zonas de Quebrada y Precordillera",
+                    Titulo = "Alerta Fitosanitaria: Incidencia de Oruga Cogollera (Spodoptera)",
+                    ModuloOrigen = "Cultivos",
+                    TipoAlerta = "Plaga Fitosanitaria",
+                    NivelSeveridad = "Alta",
+                    ZonaAfectada = "Lote LT-NOA-003 (Finca El Rodeo - Anta, Salta)",
+                    Descripcion = "Captura de trampas de luz y monitoreo en campo arrojan 22% de plantas con daño fresco en cogollo de maíz tardío.",
+                    RecomendacionOperativa = "Programar pulverizadora autopropulsada con insecticida selectivo de bajo impacto ambiental dentro de las 48 hs.",
+                    FechaEmision = DateTime.Now.AddHours(-2),
+                    Activa = true
+                },
+                new AlertaMeteorologica
+                {
+                    Id = 4,
+                    Titulo = "Alerta Logística: Demora y Detención en Ruta Nacional 34",
+                    ModuloOrigen = "Transporte",
+                    TipoAlerta = "Tránsito y Flota",
+                    NivelSeveridad = "Media",
+                    ZonaAfectada = "Ruta Nac. 34 Km 782 (Rosario de la Frontera)",
+                    Descripcion = "Unidad Scania R450 (Chofer R. Gómez - CP-2026-08812) detenida por más de 50 minutos con 32 Tn de Soja hacia acopio.",
+                    RecomendacionOperativa = "Contactar al chofer mediante telemetría satelital y constatar estado de la carga y hoja de ruta.",
+                    FechaEmision = DateTime.Now.AddHours(-3),
+                    Activa = true
+                },
+                new AlertaMeteorologica
+                {
+                    Id = 5,
+                    Titulo = "Alerta de Cosecha: Saturación de Capacidad en Tolvas Autodescargables",
+                    ModuloOrigen = "Cosecha",
+                    TipoAlerta = "Capacidad Operativa",
+                    NivelSeveridad = "Alta",
+                    ZonaAfectada = "Finca Santa Rosa - Lote El Manantial (Leales, Tucumán)",
+                    Descripcion = "Ritmo de recolección de cosechadoras John Deere supera capacidad de descarga. Tolvas al 95% de capacidad.",
+                    RecomendacionOperativa = "Asignar 2 camiones de auxilio logístico con prioridad de acceso a cabecera de lote.",
+                    FechaEmision = DateTime.Now.AddHours(-4),
+                    Activa = true
+                },
+                new AlertaMeteorologica
+                {
+                    Id = 6,
+                    Titulo = "Validación Pendiente de Certificado SENASA / CTG para Despacho",
+                    ModuloOrigen = "Transporte",
+                    TipoAlerta = "Conformidad y Calidad",
+                    NivelSeveridad = "Informativa",
+                    ZonaAfectada = "Despacho Finca Bella Vista -> Puerto Rosario",
+                    Descripcion = "Carga de granos lista para despacho requiere confirmación de análisis fitosanitario e integración fiscal CTG.",
+                    RecomendacionOperativa = "Validar el CTG en AFIP antes de liberar la salida del transporte de carga pesada.",
+                    FechaEmision = DateTime.Now.AddHours(-5),
+                    Activa = true
+                },
+                new AlertaMeteorologica
+                {
+                    Id = 7,
+                    Titulo = "Aviso Preventivo: Viento Zonda en Zonas de Precordillera",
+                    ModuloOrigen = "Clima",
                     TipoAlerta = "Viento Fuerte",
                     NivelSeveridad = "Media",
                     ZonaAfectada = "Valles Calchaquíes y Piedemonte",
                     Descripcion = "Ráfagas secas superiores a 55 km/h con marcado descenso de humedad relativa (<20%).",
-                    RecomendacionOperativa = "Extremar prevención contra incendios rurales. Prohibir quemas de rastrojo y supervisar generadores eléctricos.",
+                    RecomendacionOperativa = "Extremar prevención contra incendios rurales. Prohibir quemas de rastrojo.",
                     FechaEmision = DateTime.Now.AddDays(-1),
                     Activa = false
                 }

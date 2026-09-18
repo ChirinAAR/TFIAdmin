@@ -159,33 +159,12 @@
                                     </Button.Style>
                                 </Button>
 
-                                <!-- 6. Clima & Alertas -->
-                                <Button Command="{Binding NavegarCommand}" CommandParameter="Clima">
+                                <!-- 6. Clima -->
+                                <Button Content="🌤️ Clima" Command="{Binding NavegarCommand}" CommandParameter="Clima">
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource BtnNavTab}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding MenuActivo}" Value="Clima">
-                                                    <Setter Property="Background" Value="#2E7D32" />
-                                                    <Setter Property="Foreground" Value="White" />
-                                                    <Setter Property="FontWeight" Value="Bold" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="🌤️ Clima &amp; Alertas" VerticalAlignment="Center" />
-                                        <Border Background="#DC2626" CornerRadius="8" Padding="6,1" Margin="6,0,0,0" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding CantidadAlertasActivas}" Foreground="White" FontSize="10" FontWeight="Bold" />
-                                        </Border>
-                                    </StackPanel>
-                                </Button>
-
-                                <!-- 7. Trazabilidad -->
-                                <Button Content="🔍 Trazabilidad" Command="{Binding NavegarCommand}" CommandParameter="Trazabilidad">
-                                    <Button.Style>
-                                        <Style TargetType="Button" BasedOn="{StaticResource BtnNavTab}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding MenuActivo}" Value="Trazabilidad">
                                                     <Setter Property="Background" Value="#2E7D32" />
                                                     <Setter Property="Foreground" Value="White" />
                                                     <Setter Property="FontWeight" Value="Bold" />

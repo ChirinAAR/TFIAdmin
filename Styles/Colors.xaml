@@ -47,4 +47,10 @@
     <SolidColorBrush x:Key="BrushTextMuted" Color="{StaticResource ColorTextMuted}" />
     <SolidColorBrush x:Key="BrushTextLight" Color="{StaticResource ColorTextLight}" />
 
+    <!-- Overrides de Resaltado del Sistema para evitar texto blanco sobre claro -->
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#DCFCE7" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#0F172A" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#E2FBE8" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#0F172A" />
+
 </ResourceDictionary>
